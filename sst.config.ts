@@ -16,9 +16,24 @@ export default $config({
     };
   },
   async run() {
-    const api = new sst.aws.ApiGatewayV2("MedicationsApi");
+    const vpc = new sst.aws.Vpc("MedthriveVpc", { bastion: true, nat: "ec2" });
+    const rds = new sst.aws.Postgres("MedthrivePostgres", { vpc, proxy: true });
 
-    api.route("GET /medications/{patientId}", "src/get-medications/handler.ts");
+    new sst.x.DevCommand("Studio", {
+      link: [rds],
+      dev: {
+        command: "npx drizzle-kit studio",
+      },
+    });
+
+    const api = new sst.aws.ApiGatewayV2("MedthriveApi", { link: [rds] });
+
+    api.route("GET /medications/{patientId}", {
+      handler: "src/lambdas/get-medications/handler.default"
+    });
+    api.route("POST /medications", {
+      handler: "src/lambdas/post-medications/handler.default"
+    });
 
     return { api: api.url };
   },

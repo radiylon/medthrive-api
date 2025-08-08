@@ -1,9 +1,9 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import { medications } from '../data/medications.js';
+import { medications } from '../../__tests__/data/medications.js';
 
-export const handler = async (
+export default async function postMedications(
   event: APIGatewayProxyEventV2
-): Promise<APIGatewayProxyResultV2> => {
+): Promise<APIGatewayProxyResultV2> {
   // Extract patientId from path parameters
   const patientId = event.pathParameters?.patientId;
 

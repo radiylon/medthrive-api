@@ -4,50 +4,50 @@ import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-l
 import { medications } from './data/medications.js';
 
 describe('Medications', () => {
-  describe('GET /medications/{patientId}', () => {
-    it('should return an error if patientId is undefined', async () => {
+  describe('GET /patients/{patient_id}/medications', () => {
+    it('should return an error if patient_id is undefined', async () => {
       const event = {
         pathParameters: {
-          patientId: undefined
+          patient_id: undefined
         }
       } as unknown as APIGatewayProxyEventV2;
 
       const result = await getMedications(event) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal('Error: patientId is required');
+      expect(result.body).to.equal('Error: patient_id is required');
     });
 
-    it('should return an error if patientId is null', async () => {
+    it('should return an error if patient_id is null', async () => {
       const event = {
         pathParameters: {
-          patientId: null
+          patient_id: null
         }
       } as unknown as APIGatewayProxyEventV2;
 
       const result = await getMedications(event) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal('Error: patientId is required');
+      expect(result.body).to.equal('Error: patient_id is required');
     });
 
-    it('should return an error if patientId is not a string', async () => {
+    it('should return an error if patient_id is not a string', async () => {
       const event = {
         pathParameters: {
-          patientId: 123456
+          patient_id: 123456
         }
       } as unknown as APIGatewayProxyEventV2;
 
       const result = await getMedications(event) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal('Error: patientId is not a string');
+      expect(result.body).to.equal('Error: patient_id is not a string');
     });
 
     it('should return an empty array if no medications are found for the patientId', async () => {
       const event = {
         pathParameters: {
-          patientId: 'this-is-not-a-valid-patient-id'
+          patient_id: 'this-is-not-a-valid-patient-id'
         }
       } as unknown as APIGatewayProxyEventV2;
 
@@ -57,10 +57,10 @@ describe('Medications', () => {
       expect(result.body).to.equal(JSON.stringify([]));
     });
 
-    it('should return the medications for a valid patientId', async () => {
+    it('should return the medications for a valid patient_id', async () => {
       const event = {
         pathParameters: {
-          patientId: '123e4567-e89b-12d3-a456-426614174111'
+          patient_id: '123e4567-e89b-12d3-a456-426614174111'
         }
       } as unknown as APIGatewayProxyEventV2;
 

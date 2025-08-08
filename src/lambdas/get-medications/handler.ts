@@ -5,19 +5,19 @@ export default async function getMedications(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   // Extract patientId from path parameters
-  const patientId = event.pathParameters?.patientId;
+  const patientId = event.pathParameters?.patient_id;
 
   if (!patientId) {
     return {
       statusCode: 400,
-      body: "Error: patientId is required"
+      body: "Error: patient_id is required"
     };
   }
 
   if (typeof patientId !== 'string') {
     return {
       statusCode: 400,
-      body: "Error: patientId is not a string"
+      body: "Error: patient_id is not a string"
     };
   }
 

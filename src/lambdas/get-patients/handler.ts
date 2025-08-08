@@ -15,7 +15,6 @@ export default async function getPatients(
   }
 
   // TODO: replace with a database query
-  // Filter medications by patient_id
   const patientsList = patientId ? patients.filter((patient) => patient.id === patientId) : patients;
 
   return {

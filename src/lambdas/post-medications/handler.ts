@@ -4,8 +4,9 @@ import { medications } from '../../__tests__/data/medications.ts';
 export default async function postMedications(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
-  // Extract patientId from path parameters
-  const patientId = event.pathParameters?.patient_id;
+  // Extract patientId from request body
+  const body = event.body ? JSON.parse(event.body) : null;
+  const patientId = body?.patient_id;
 
   if (!patientId) {
     return {

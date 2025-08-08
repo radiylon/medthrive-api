@@ -1,5 +1,5 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import { medications } from '../../__tests__/data/medications.js';
+import { medications } from '../../__tests__/data/medications.ts';
 
 export default async function getMedications(
   event: APIGatewayProxyEventV2

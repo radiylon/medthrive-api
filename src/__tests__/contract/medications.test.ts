@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import getMedications from '../lambdas/get-medications/handler.js';
+import getMedications from '../../lambdas/get-medications/handler.ts';
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
-import { medications } from './data/medications.js';
+import { medications } from '../data/medications.ts';
 
 describe('Medications', () => {
   describe('GET /patients/{patient_id}/medications', () => {

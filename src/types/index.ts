@@ -27,7 +27,7 @@ interface Caregiver {
   last_name: string;
 }
 
-interface Patient {
+export interface Patient {
   id: string;
   caregiver_id: string;
   first_name: string;

@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "sst dev",
     "test": "mocha --loader=ts-node/esm \"src/__tests__/**/*.test.ts\"",
+    "test:contract": "mocha --loader=ts-node/esm \"src/__tests__/contract/*.test.ts\"",
     "db": "sst shell drizzle-kit"
   },
   "dependencies": {

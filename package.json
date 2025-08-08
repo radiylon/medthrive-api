@@ -1,11 +1,11 @@
 {
-  "name": "medthrive",
+  "name": "medthrive-api",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
   "author": "",
   "type": "module",
-  "main": "index.ts",
+  "main": "",
   "scripts": {
     "dev": "sst dev",
     "test": "mocha --loader=ts-node/esm \"src/__tests__/**/*.test.ts\"",

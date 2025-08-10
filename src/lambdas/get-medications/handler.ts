@@ -1,6 +1,7 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import { medications } from '../../__tests__/data/medications.ts';
 
+// TODO: separate out route for getMedicationsById
 export default async function getMedications(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
@@ -22,7 +23,6 @@ export default async function getMedications(
   }
 
   // TODO: replace with a database query
-  // Filter medications by patient_id
   const patientMedications = medications.filter(med => med.patient_id === patientId);
 
   return {

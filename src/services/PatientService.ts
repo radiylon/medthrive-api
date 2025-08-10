@@ -2,7 +2,7 @@ import { Patient } from "../types";
 import { patients as mockPatients } from "../__tests__/data/patients.ts"
 
 export default class PatientService {
-  async getPatients(caregiverId: string): Promise<Patient[]> {
+  async getPatientsByCaregiverId(caregiverId: string): Promise<Patient[]> {
     return mockPatients.filter((patient) => patient.caregiver_id === caregiverId);
   }
 
@@ -15,4 +15,6 @@ export default class PatientService {
 
     return patient;
   }
+
+  // TODO: Add a method to create a patient
 }

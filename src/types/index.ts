@@ -13,7 +13,7 @@ export interface Medication {
   updated_at: Date;
 }
 
-interface MedicationDose {
+export interface MedicationDose {
   id: string;
   patient_id: string;
   medication_id: string;

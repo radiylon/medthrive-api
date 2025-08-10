@@ -3,6 +3,8 @@ import getMedications from '../../lambdas/get-medications/handler.ts';
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
 import { medications } from '../data/medications.ts';
 
+// To run this test:  npm run test:contract -- --grep "Medications"
+
 describe('Medications', () => {
   describe('GET /patients/{patient_id}/medications', () => {
     it('should return an error if patient_id is undefined', async () => {

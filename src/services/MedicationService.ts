@@ -2,7 +2,7 @@ import { Medication } from "../types";
 import { medications as mockMedications } from "../__tests__/data/medications.ts"
 
 export default class MedicationService {
-  async getMedications(patientId: string): Promise<Medication[]> {
+  async getMedicationsByPatientId(patientId: string): Promise<Medication[]> {
     const medications = mockMedications.filter((medication) => medication.patient_id === patientId);
     return medications;
   }
@@ -16,4 +16,6 @@ export default class MedicationService {
 
     return medication;
   }
+
+  // TODO: Add a method to create a medication w/ schedule
 }

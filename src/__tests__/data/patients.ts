@@ -33,5 +33,38 @@ export const patients: Patient[] = [
     date_of_birth: new Date("1990-12-03"),
     created_at: new Date("2024-03-01T08:00:00Z"),
     updated_at: new Date("2024-03-01T08:00:00Z")
+  },
+  {
+    id: "423e4567-e89b-12d3-a456-426614174444",
+    caregiver_id: "987f6543-e21b-12d3-a456-426614174002",
+    first_name: "Maria",
+    last_name: "Garcia",
+    email: "maria.garcia@example.com",
+    phone_number: "+1-555-456-7890",
+    date_of_birth: new Date("1988-03-25"),
+    created_at: new Date("2024-03-01T08:00:00Z"),
+    updated_at: new Date("2024-03-01T08:00:00Z")
+  },
+  {
+    id: "523e4567-e89b-12d3-a456-426614174555",
+    caregiver_id: "987f6543-e21b-12d3-a456-426614174002",
+    first_name: "David",
+    last_name: "Chen",
+    email: "david.chen@example.com",
+    phone_number: "+1-555-567-8901",
+    date_of_birth: new Date("1995-11-08"),
+    created_at: new Date("2024-03-01T08:00:00Z"),
+    updated_at: new Date("2024-03-01T08:00:00Z")
+  },
+  {
+    id: "623e4567-e89b-12d3-a456-426614174666",
+    caregiver_id: "987f6543-e21b-12d3-a456-426614174002",
+    first_name: "Sarah",
+    last_name: "Williams",
+    email: "sarah.williams@example.com",
+    phone_number: "+1-555-678-9012",
+    date_of_birth: new Date("1992-07-14"),
+    created_at: new Date("2024-03-01T08:00:00Z"),
+    updated_at: new Date("2024-03-01T08:00:00Z")
   }
 ];

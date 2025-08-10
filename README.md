@@ -11,5 +11,9 @@ TODO:
 - [x] Create initial API using mock DB
 - [x] Add contract tests for lambda handlers
 - [ ] Create Patient/Medication/Schedule services
+- [ ] Additional routes and tests for "ById"
 - [ ] Replace mock implementation in services with database queries
-- [ ] Supporting UI
+- [ ] MVP vs prod design
+- [ ] Finalize README
+- [ ] Finalize supporting docs + tradeoffs
+- [ ] Supporting React UI

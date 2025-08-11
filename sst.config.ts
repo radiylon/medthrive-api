@@ -26,14 +26,22 @@ export default $config({
       },
     });
 
-    const api = new sst.aws.ApiGatewayV2("MedthriveApi", { vpc, link: [rds] });
+    const api = new sst.aws.ApiGatewayV2("MedthriveApi", { 
+      vpc, 
+      link: [rds],
+      cors: {
+        allowHeaders: ["*"],
+        allowMethods: ["*"],
+        allowOrigins: ["http://localhost:3000"]
+      }
+    });
 
-    api.route("GET /patients", {
+    api.route("GET /caregivers/{caregiver_id}/patients", {
       handler: "src/lambdas/get-patients/handler.default"
     });
 
     api.route("GET /patients/{patient_id}", {
-      handler: "src/lambdas/get-patients-by-id/handler.default"
+      handler: "src/lambdas/get-patient-by-id/handler.default"
     });
     
     api.route("GET /patients/{patient_id}/medications", {
@@ -44,7 +52,7 @@ export default $config({
       handler: "src/lambdas/get-medication-by-id/handler.default"
     });
 
-    api.route("POST /medications", {
+    api.route("POST /patients/{patient_id}/medications", {
       handler: "src/lambdas/post-medications/handler.default"
     });
 
@@ -52,7 +60,7 @@ export default $config({
       handler: "src/lambdas/patch-medications/handler.default"
     });
 
-    api.route("GET /schedules", {
+    api.route("GET /medications/{medication_id}/schedules", {
       handler: "src/lambdas/get-schedules-by-medication-id/handler.default"
     });
 

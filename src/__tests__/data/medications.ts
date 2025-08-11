@@ -11,9 +11,9 @@ export const medications: Medication[] = [
     schedule: {
       frequency: 1,
       type: "daily",
-      start_date: new Date("2024-03-01T09:00:00Z")
+      start_date: new Date("2025-07-27T09:00:00Z")
     },
-    created_at: new Date("2024-03-01T09:00:00Z"),
-    updated_at: new Date("2024-03-01T09:00:00Z")
+    created_at: new Date("2025-07-27T09:00:00Z"),
+    updated_at: new Date("2025-07-27T09:00:00Z")
   }
 ];

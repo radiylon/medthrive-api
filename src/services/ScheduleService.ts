@@ -8,14 +8,14 @@ export default class ScheduleService {
     return mockSchedules.filter((schedule) => schedule.patient_id === patientId);
   }
 
-  async getScheduleByMedicationId(medicationId: string): Promise<Schedule> {
-    const schedule = mockSchedules.find((schedule) => schedule.medication_id === medicationId);
+  async getSchedulesByMedicationId(medicationId: string): Promise<Schedule[]> {
+    const schedules = mockSchedules.filter((schedule) => schedule.medication_id === medicationId);
 
-    if (!schedule) {
+    if (!schedules) {
       throw new Error('Error: Schedule not found');
     }
 
-    return schedule;
+    return schedules;
   }
   
   async getScheduleById(scheduleId: string): Promise<Schedule> {

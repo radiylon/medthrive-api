@@ -3,24 +3,7 @@ import PatientService from '../../services/PatientService.ts';
 
 export default async function getPatients(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
   try {
-    if (!event.body) {
-      return {
-        statusCode: 400,
-        body: "Error: Request body is required"
-      };
-    }
-
-    let eventBody;
-    try {
-      eventBody = JSON.parse(event.body);
-    } catch (parseError) {
-      return {
-        statusCode: 400,
-        body: "Error: Invalid JSON in request body"
-      };
-    }
-
-    const caregiverId = eventBody?.caregiver_id;
+    const caregiverId = event.pathParameters?.caregiver_id;
 
     if (!caregiverId) {
       return {

@@ -14,18 +14,7 @@ describe('Patients', () => {
       const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal("Error: Request body is required");
-    });
-    
-    it('should return an error for an invalid JSON in request body', async () => {
-      const mockEvent = { 
-        body: "invalid-json" 
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal("Error: Invalid JSON in request body");
+      expect(result.body).to.equal("Error: caregiver_id is required");
     });
 
     it('should return an error for an invalid caregiver_id', async () => {
@@ -36,7 +25,7 @@ describe('Patients', () => {
       const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal("Error: caregiver_id is not a string");
+      expect(result.body).to.equal("Error: caregiver_id is required");
     });
 
     it('should return an error for a missing caregiver_id', async () => {
@@ -54,7 +43,9 @@ describe('Patients', () => {
       const mockCaregiverId = '123e4567-e89b-12d3-a456-426614174000';
       
       const mockEvent = { 
-        body: JSON.stringify({ caregiver_id: mockCaregiverId })
+        pathParameters: {
+          caregiver_id: mockCaregiverId
+        }
       } as unknown as APIGatewayProxyEventV2;
 
       const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;

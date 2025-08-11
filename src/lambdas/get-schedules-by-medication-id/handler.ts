@@ -1,12 +1,11 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import ScheduleService from '../../services/ScheduleService.ts';
 
-export default async function getSchedules(
+export default async function getSchedulesByMedicationId(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   try {
-    const eventBody = event.body ? JSON.parse(event.body) : null;
-    const medicationId = eventBody?.medication_id;
+    const medicationId = event.pathParameters?.medication_id;
   
     if (!medicationId) {
       return {
@@ -16,11 +15,11 @@ export default async function getSchedules(
     }
 
     const scheduleService = new ScheduleService();
-    const schedule = await scheduleService.getScheduleByMedicationId(medicationId);
+    const schedules = await scheduleService.getSchedulesByMedicationId(medicationId);
   
     return {
       statusCode: 200,
-      body: JSON.stringify(schedule)
+      body: JSON.stringify(schedules)
     };
   } catch (err) {
     return {

@@ -13,7 +13,7 @@ export interface Medication {
   updated_at: Date;
 }
 
-export interface MedicationDose {
+export interface Schedule {
   id: string;
   patient_id: string;
   medication_id: string;
@@ -21,10 +21,16 @@ export interface MedicationDose {
   taken_at: Date;
 }
 
-interface Caregiver {
+export interface Caregiver {
   id: string;
   first_name: string;
   last_name: string;
+  email: string;
+  phone_number: string;
+  date_of_birth: Date;
+  gender: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface Patient {
@@ -35,6 +41,7 @@ export interface Patient {
   email: string;
   phone_number: string;
   date_of_birth: Date;
+  gender: string;
   created_at: Date;
   updated_at: Date;
 }

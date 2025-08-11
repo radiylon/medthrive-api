@@ -1,15 +1,15 @@
-import { MedicationDose } from "../types";
+import { Schedule } from "../types";
 
 export default class ScheduleService {
-  async getMedicationDosesByPatientId(patientId: string): Promise<MedicationDose[]> {
+  async getSchedulesByPatientId(patientId: string): Promise<Schedule[]> {
     return [];
   }
 
-  async getMedicationDoseByMedicationId(medicationId: string): Promise<MedicationDose> {
-    return {} as MedicationDose;
+  async getScheduleByMedicationId(medicationId: string): Promise<Schedule> {
+    return {} as Schedule;
   }
   
-  async getMedicationDoseById(medicationDoseId: string): Promise<MedicationDose> {
-    return {} as MedicationDose;
+  async getScheduleById(scheduleId: string): Promise<Schedule> {
+    return {} as Schedule;
   }
 }

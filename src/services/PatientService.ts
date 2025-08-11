@@ -16,5 +16,7 @@ export default class PatientService {
     return patient;
   }
 
-  // TODO: Add a method to create a patient
+  async createPatient(patient: Patient): Promise<Patient> {
+    return {} as Patient;
+  }
 }

@@ -32,15 +32,23 @@ export default $config({
       handler: "src/lambdas/get-patients/handler.default"
     });
 
+    api.route("POST /patients", {
+      handler: "src/lambdas/post-patients/handler.default"
+    });
+
     api.route("GET /patients/{patient_id}", {
       handler: "src/lambdas/get-patients-by-id/handler.default"
     });
     
-    api.route("GET /medications/{patient_id}", {
+    api.route("GET /patients/{patient_id}/medications", {
       handler: "src/lambdas/get-medications/handler.default"
     });
 
-    api.route("POST /medications", {
+    // api.route("GET /patients/{patient_id}/medications/{medication_id}", {
+    //   handler: "src/lambdas/get-medications-by-id/handler.default"
+    // });
+
+    api.route("POST /patients/{patient_id}/medications", {
       handler: "src/lambdas/post-medications/handler.default"
     });
 

@@ -9,6 +9,7 @@ export const patients: Patient[] = [
     email: "john.doe@example.com",
     phone_number: "+1-555-123-4567",
     date_of_birth: new Date("1980-05-15"),
+    gender: "male",
     created_at: new Date("2024-03-01T08:00:00Z"),
     updated_at: new Date("2024-03-01T08:00:00Z")
   },
@@ -20,6 +21,7 @@ export const patients: Patient[] = [
     email: "jane.smith@example.com",
     phone_number: "+1-555-234-5678",
     date_of_birth: new Date("1975-08-22"),
+    gender: "female",
     created_at: new Date("2024-03-01T08:00:00Z"),
     updated_at: new Date("2024-03-01T08:00:00Z")
   },
@@ -31,6 +33,7 @@ export const patients: Patient[] = [
     email: "robert.johnson@example.com",
     phone_number: "+1-555-345-6789",
     date_of_birth: new Date("1990-12-03"),
+    gender: "male",
     created_at: new Date("2024-03-01T08:00:00Z"),
     updated_at: new Date("2024-03-01T08:00:00Z")
   },
@@ -42,6 +45,7 @@ export const patients: Patient[] = [
     email: "maria.garcia@example.com",
     phone_number: "+1-555-456-7890",
     date_of_birth: new Date("1988-03-25"),
+    gender: "female",
     created_at: new Date("2024-03-01T08:00:00Z"),
     updated_at: new Date("2024-03-01T08:00:00Z")
   },
@@ -53,6 +57,7 @@ export const patients: Patient[] = [
     email: "david.chen@example.com",
     phone_number: "+1-555-567-8901",
     date_of_birth: new Date("1995-11-08"),
+    gender: "male",
     created_at: new Date("2024-03-01T08:00:00Z"),
     updated_at: new Date("2024-03-01T08:00:00Z")
   },
@@ -64,6 +69,7 @@ export const patients: Patient[] = [
     email: "sarah.williams@example.com",
     phone_number: "+1-555-678-9012",
     date_of_birth: new Date("1992-07-14"),
+    gender: "other",
     created_at: new Date("2024-03-01T08:00:00Z"),
     updated_at: new Date("2024-03-01T08:00:00Z")
   }

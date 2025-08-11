@@ -136,36 +136,45 @@ describe('Medications', () => {
     });
 
     it('should create a medication for a valid patient_id and event body', async () => {
+      const testData = {
+        name: 'Test Medication',
+        description: 'Test Description',
+        quantity: 10,
+        is_active: true,
+        schedule: {
+          frequency: 1,
+          type: 'daily' as const,
+          start_date: new Date()
+        }
+      };
+
       const event = {
         pathParameters: {
           patient_id: '123e4567-e89b-12d3-a456-426614174111'
         },
-        body: JSON.stringify({
-          name: 'Test Medication',
-          description: 'Test Description',
-          quantity: 10,
-          is_active: true,
-          schedule: {
-            frequency: 1,
-            type: 'daily',
-            start_date: new Date()
-          }
-        })
+        body: JSON.stringify(testData)
       } as unknown as APIGatewayProxyEventV2;
 
       const result = await postMedications(event) as APIGatewayProxyStructuredResultV2;
-
       expect(result.statusCode).to.equal(200);
       
       const responseBody = JSON.parse(result.body as string);
       
+      // Check required fields match input
       expect(responseBody).to.include({
         patient_id: '123e4567-e89b-12d3-a456-426614174111',
-        name: 'Test Medication',
-        description: 'Test Description',
-        quantity: 10,
-        is_active: true
+        name: testData.name,
+        description: testData.description,
+        quantity: testData.quantity,
+        is_active: testData.is_active
       });
+
+      // Check schedule structure
+      expect(responseBody).to.have.property('schedule')
+        .that.deep.includes({
+          frequency: testData.schedule.frequency,
+          type: testData.schedule.type
+        });
     });
   });
 

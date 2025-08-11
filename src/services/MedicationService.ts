@@ -18,11 +18,17 @@ export default class MedicationService {
     return medication;
   }
 
-  async createMedication(patientId: string, medication: Medication): Promise<Medication> {
-    const newMedication = {
-      ...medication,
+  async createMedication(patientId: string, medicationData: Partial<Medication>): Promise<Medication> {
+    const newMedication: Medication = {
+      id: uuidv4(),
       patient_id: patientId,
-      id: uuidv4()
+      name: medicationData.name!,
+      description: medicationData.description || "",
+      quantity: medicationData.quantity!,
+      is_active: medicationData.is_active ?? true,
+      schedule: medicationData.schedule!,
+      created_at: new Date(),
+      updated_at: new Date()
     };
 
     mockMedications.push(newMedication);
@@ -39,6 +45,6 @@ export default class MedicationService {
 
     Object.assign(updatedMedication, medication);
 
-    return medication;
+    return updatedMedication;
   }
 }

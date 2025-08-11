@@ -31,16 +31,18 @@ export default class ScheduleService {
   async createSchedules(medication: Medication): Promise<void> {
     const { quantity, schedule } = medication;
     const { frequency, type, start_date } = schedule;
+    const startDate = new Date(start_date);
     
     for (let i = 0; i < quantity; i++) {
-      let scheduledDate;
+      const scheduledDate = new Date(startDate);
+      
       if (type === 'daily') {
-        scheduledDate = new Date(start_date.getTime() + i * frequency * 24 * 60 * 60 * 1000);
+        scheduledDate.setDate(startDate.getDate() + i * frequency);
       } else if (type === 'weekly') {
-        scheduledDate = new Date(start_date.getTime() + i * frequency * 7 * 24 * 60 * 60 * 1000);
+        scheduledDate.setDate(startDate.getDate() + i * frequency * 7);
       }
 
-      const schedule = {
+      const newSchedule: Schedule = {
         id: uuidv4(),
         medication_id: medication.id,
         patient_id: medication.patient_id,
@@ -50,7 +52,7 @@ export default class ScheduleService {
         updated_at: new Date()
       };
 
-      mockSchedules.push(schedule as Schedule);
+      mockSchedules.push(newSchedule);
     }
   }
 
@@ -62,6 +64,7 @@ export default class ScheduleService {
     }
 
     schedule.taken_at = new Date();
+    schedule.updated_at = new Date();
 
     return schedule;
   }

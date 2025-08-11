@@ -17,3 +17,7 @@ This project utilizes AWS via sst.dev.  In order to to properly run the applicat
 Once complete, you will need to replace the profiles in `sst.config.ts` with your own account profiles.
 
 From there, you should be able to run `npm run dev` for local development.
+
+## Testing
+
+To run the test suite, you can run `npm run test`.  You can also run individual test files by copying & running the command at the top of the appropriate test.

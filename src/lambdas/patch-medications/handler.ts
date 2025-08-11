@@ -1,29 +1,29 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import MedicationService from '../../services/MedicationService.ts';
 
-export default async function postMedications(
+export default async function patchMedications(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   try {
+    const medicationId = event.pathParameters?.medication_id;
     const eventBody = event.body ? JSON.parse(event.body) : null;
-    const patientId = event.pathParameters?.patient_id;
   
-    if (!patientId) {
+    if (!medicationId) {
       return {
         statusCode: 400,
-        body: "Error: patient_id is required"
+        body: "Error: medication_id is required"
       };
     }
   
-    if (patientId && typeof patientId !== 'string') {
+    if (typeof medicationId !== 'string') {
       return {
         statusCode: 400,
-        body: "Error: patient_id is not a string"
+        body: "Error: medication_id is not a string"
       };
     }
 
     const medicationService = new MedicationService();
-    const medication = await medicationService.createMedication(patientId, eventBody);
+    const medication = await medicationService.updateMedication(eventBody);
   
     return {
       statusCode: 200,
@@ -32,7 +32,7 @@ export default async function postMedications(
   } catch (err) {
     return {
       statusCode: 500,
-      body: err instanceof Error ? err.message : "Error: Failed to create medication"
+      body: err instanceof Error ? err.message : "Error: Failed to update medication"
     };
   }
 };

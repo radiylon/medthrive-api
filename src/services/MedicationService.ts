@@ -18,9 +18,10 @@ export default class MedicationService {
     return medication;
   }
 
-  async createMedication(medication: Medication): Promise<Medication> {
+  async createMedication(patientId: string, medication: Medication): Promise<Medication> {
     const newMedication = {
       ...medication,
+      patient_id: patientId,
       id: uuidv4()
     };
 
@@ -29,13 +30,15 @@ export default class MedicationService {
     return newMedication;
   }
 
-  async deleteMedication(medicationId: string): Promise<void> {
-    const medication = mockMedications.find((medication) => medication.id === medicationId);
+  async updateMedication(medication: Medication): Promise<Medication> {
+    const updatedMedication = mockMedications.find((medication) => medication.id === medication.id);
 
-    if (!medication) {
+    if (!updatedMedication) {
       throw new Error('Error: Medication not found');
     }
 
-    medication.is_active = false;
+    Object.assign(updatedMedication, medication);
+
+    return medication;
   }
 }

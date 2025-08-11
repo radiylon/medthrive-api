@@ -32,7 +32,7 @@ export default $config({
       cors: {
         allowHeaders: ["*"],
         allowMethods: ["*"],
-        allowOrigins: ["http://localhost:3000"]
+        allowOrigins: ["http://localhost:3000", "https://d3iqr4nk3h4ypf.cloudfront.net"]
       }
     });
 

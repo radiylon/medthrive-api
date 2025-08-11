@@ -1,5 +1,6 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import MedicationService from '../../services/MedicationService.ts';
+import ScheduleService from '../../services/ScheduleService.ts';
 
 export default async function postMedications(
   event: APIGatewayProxyEventV2
@@ -24,6 +25,9 @@ export default async function postMedications(
 
     const medicationService = new MedicationService();
     const medication = await medicationService.createMedication(patientId, eventBody);
+
+    const scheduleService = new ScheduleService();
+    await scheduleService.createSchedules(medication);
   
     return {
       statusCode: 200,

@@ -17,7 +17,7 @@ export default $config({
   },
   async run() {
     const vpc = new sst.aws.Vpc("MedthriveVpc", { bastion: true, nat: "ec2" });
-    const rds = new sst.aws.Postgres("MedthrivePostgres", { vpc, proxy: true });
+    const rds = new sst.aws.Postgres("MedthrivePostgres", { vpc });
 
     new sst.x.DevCommand("Studio", {
       link: [rds],

@@ -15,16 +15,17 @@
   "dependencies": {
     "drizzle-orm": "^0.44.4",
     "pg": "^8.16.3",
-    "sst": "3.17.10"
+    "sst": "3.17.10",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@types/pg": "^8.15.5",
     "@types/aws-lambda": "8.10.152",
     "@types/chai": "^4.3.11",
     "@types/mocha": "^10.0.6",
     "@types/node": "^18.19.0",
-    "drizzle-kit": "^0.31.4",
+    "@types/pg": "^8.15.5",
     "chai": "^4.3.10",
+    "drizzle-kit": "^0.31.4",
     "mocha": "^10.2.0",
     "ts-node": "^10.9.2"
   }

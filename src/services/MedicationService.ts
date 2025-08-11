@@ -1,5 +1,6 @@
 import { Medication } from "../types";
 import { medications as mockMedications } from "../__tests__/data/medications.ts"
+import { v4 as uuidv4 } from 'uuid';
 
 export default class MedicationService {
   async getMedicationsByPatientId(patientId: string): Promise<Medication[]> {
@@ -17,5 +18,24 @@ export default class MedicationService {
     return medication;
   }
 
-  // TODO: Add a method to create a medication w/ schedule
+  async createMedication(medication: Medication): Promise<Medication> {
+    const newMedication = {
+      ...medication,
+      id: uuidv4()
+    };
+
+    mockMedications.push(newMedication);
+
+    return newMedication;
+  }
+
+  async deleteMedication(medicationId: string): Promise<void> {
+    const medication = mockMedications.find((medication) => medication.id === medicationId);
+
+    if (!medication) {
+      throw new Error('Error: Medication not found');
+    }
+
+    medication.is_active = false;
+  }
 }

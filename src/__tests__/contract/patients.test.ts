@@ -106,7 +106,7 @@ describe('Patients', () => {
     it('should return a patient for a valid patient_id', async () => {
       const mockEvent = {
         pathParameters: {
-          patient_id: '123e4567-e89b-12d3-a456-426614174111'
+          patient_id: '223e4567-e89b-12d3-a456-426614174000'
         }
       } as unknown as APIGatewayProxyEventV2;
   

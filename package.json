@@ -13,7 +13,6 @@
     "db": "sst shell drizzle-kit"
   },
   "dependencies": {
-    "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.4",
     "pg": "^8.16.3",
     "sst": "3.17.10"
@@ -24,6 +23,7 @@
     "@types/chai": "^4.3.11",
     "@types/mocha": "^10.0.6",
     "@types/node": "^18.19.0",
+    "drizzle-kit": "^0.31.4",
     "chai": "^4.3.10",
     "mocha": "^10.2.0",
     "ts-node": "^10.9.2"

@@ -26,7 +26,7 @@ export default $config({
       },
     });
 
-    const api = new sst.aws.ApiGatewayV2("MedthriveApi", { link: [rds] });
+    const api = new sst.aws.ApiGatewayV2("MedthriveApi", { vpc, link: [rds] });
 
     api.route("GET /patients", {
       handler: "src/lambdas/get-patients/handler.default"
@@ -43,10 +43,6 @@ export default $config({
     api.route("GET /patients/{patient_id}/medications", {
       handler: "src/lambdas/get-medications/handler.default"
     });
-
-    // api.route("GET /patients/{patient_id}/medications/{medication_id}", {
-    //   handler: "src/lambdas/get-medications-by-id/handler.default"
-    // });
 
     api.route("POST /patients/{patient_id}/medications", {
       handler: "src/lambdas/post-medications/handler.default"

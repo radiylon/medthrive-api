@@ -7,6 +7,7 @@ export const medication = pgTable("medication", {
     .notNull()
     .references(() => patient.id),
   name: text("name").notNull(),
+  description: text("description"),
   quantity: integer("quantity").notNull(),
   is_active: boolean("is_active").notNull().default(true),
   schedule: jsonb("schedule").notNull().$type<{

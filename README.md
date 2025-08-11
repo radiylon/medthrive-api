@@ -4,7 +4,9 @@ Medthrive is an example medication management app for caregivers.  I built this 
 
 Built using TypeScript, AWS API Gateway, AWS Lambda, and Amazon RDS via SST.
 
-[Design Notes](https://docs.google.com/document/d/1lZQ15cpvRAOPbPFhcNsnM_V71i-V8CkYG91ndv7g3u0/edit?tab=t.0Z)
+[Medthrive URL](https://d3iqr4nk3h4ypf.cloudfront.net)
+
+[Project Notes](https://docs.google.com/document/d/1lZQ15cpvRAOPbPFhcNsnM_V71i-V8CkYG91ndv7g3u0/edit?tab=t.0Z)
 
 ## Installation
 

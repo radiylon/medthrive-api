@@ -70,6 +70,11 @@ export default $config({
       handler: "src/lambdas/create-medication/handler.default"
     });
 
+    // patch-medication
+    api.route("PATCH /medications/{medication_id}", {
+      handler: "src/lambdas/patch-medication/handler.default"
+    });
+
     // get-schedules-by-medication-id
     api.route("GET /medications/{medication_id}/schedules", {
       handler: "src/lambdas/get-schedules-by-medication-id/handler.default"

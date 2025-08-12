@@ -20,15 +20,15 @@ export default class MedicationService {
     return medication;
   }
 
-  async createMedication(medicationData: Medication): Promise<Medication> {
+  async createMedication(medication: Medication): Promise<Medication> {
     const newMedication: Medication = {
       id: uuidv4(),
-      patient_id: medicationData.patient_id!,
-      name: medicationData.name!,
-      description: medicationData.description || "",
-      quantity: medicationData.quantity!,
-      is_active: medicationData.is_active ?? true,
-      schedule: medicationData.schedule!,
+      patient_id: medication.patient_id!,
+      name: medication.name!,
+      description: medication.description || "",
+      quantity: medication.quantity!,
+      is_active: medication.is_active ?? true,
+      schedule: medication.schedule!,
       created_at: new Date(),
       updated_at: new Date()
     };

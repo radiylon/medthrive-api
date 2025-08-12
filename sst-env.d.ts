@@ -17,14 +17,6 @@ declare module "sst" {
       "type": "sst.aws.Postgres"
       "username": string
     }
-    "MedthrivePostgres": {
-      "database": string
-      "host": string
-      "password": string
-      "port": number
-      "type": "sst.aws.Postgres"
-      "username": string
-    }
     "MedthriveVpc": {
       "bastion": string
       "type": "sst.aws.Vpc"

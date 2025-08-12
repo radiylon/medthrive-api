@@ -1,6 +1,8 @@
 import { Medication } from "../types";
 import { medications as mockMedications } from "../__tests__/data/medications.ts"
 import { v4 as uuidv4 } from 'uuid';
+import { db } from "../drizzle.ts";
+import { medication as medicationSchema } from "../db/schema/medication.sql.ts";
 
 export default class MedicationService {
   async getMedicationsByPatientId(patientId: string): Promise<Medication[]> {
@@ -18,10 +20,10 @@ export default class MedicationService {
     return medication;
   }
 
-  async createMedication(patientId: string, medicationData: Partial<Medication>): Promise<Medication> {
+  async createMedication(medicationData: Medication): Promise<Medication> {
     const newMedication: Medication = {
       id: uuidv4(),
-      patient_id: patientId,
+      patient_id: medicationData.patient_id!,
       name: medicationData.name!,
       description: medicationData.description || "",
       quantity: medicationData.quantity!,
@@ -31,7 +33,7 @@ export default class MedicationService {
       updated_at: new Date()
     };
 
-    mockMedications.push(newMedication);
+    await db.insert(medicationSchema).values(newMedication);
 
     return newMedication;
   }

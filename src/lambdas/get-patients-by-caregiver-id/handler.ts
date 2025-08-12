@@ -1,7 +1,7 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import PatientService from '../../services/PatientService.ts';
 
-export default async function getPatients(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
+export default async function getPatientsByCaregiverId(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
   try {
     const caregiverId = event.pathParameters?.caregiver_id;
 

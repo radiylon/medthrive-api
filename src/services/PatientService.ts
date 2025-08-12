@@ -1,6 +1,8 @@
 import { Patient } from "../types";
-import { patients as mockPatients } from "../__tests__/data/patients.ts"
 import { v4 as uuidv4 } from 'uuid';
+import { db } from '../drizzle';
+import { patient as patientSchema } from '../db/schema/patient.sql';
+import { patients as mockPatients } from '../__tests__/data/patients.ts';
 
 export default class PatientService {
   async getPatientsByCaregiverId(caregiverId: string): Promise<Patient[]> {
@@ -17,14 +19,18 @@ export default class PatientService {
     return patient;
   }
 
-  async createPatient(patient: Patient): Promise<Patient> {
+  async createPatient(patient: Patient): Promise<string> {
     const newPatient = {
       ...patient,
+      caregiver_id: '123e4567-e89b-12d3-a456-426614174000',
       id: uuidv4()
     };
 
-    mockPatients.push(newPatient);
-
-    return newPatient;
+    await db.insert(patientSchema).values({
+      ...newPatient,
+      date_of_birth: newPatient.date_of_birth.toISOString()
+    });
+    
+    return 'Patient created successfully';
   }
 }

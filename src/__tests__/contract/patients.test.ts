@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import getPatients from '../../lambdas/get-patients/handler.ts';
+import getPatientsByCaregiverId from '../../lambdas/get-patients-by-caregiver-id/handler.ts';
 import getPatientById from '../../lambdas/get-patient-by-id/handler.ts';
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
 import { patients } from '../data/patients.ts';
@@ -7,11 +7,11 @@ import { patients } from '../data/patients.ts';
 // To run this test:  npm run test:contract -- --grep "Patients"
 
 describe('Patients', () => {
-  describe('GET /patients/', () => {
+  describe('GET /caregivers/{caregiver_id}/patients', () => {
     it('should return an error for an invalid event', async () => {
       const mockEvent = {} as unknown as APIGatewayProxyEventV2;
 
-      const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
+      const result = await getPatientsByCaregiverId(mockEvent) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
       expect(result.body).to.equal("Error: caregiver_id is required");
@@ -22,7 +22,7 @@ describe('Patients', () => {
         body: JSON.stringify({ caregiver_id: 123456 })
       } as unknown as APIGatewayProxyEventV2;
 
-      const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
+      const result = await getPatientsByCaregiverId(mockEvent) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
       expect(result.body).to.equal("Error: caregiver_id is required");
@@ -33,7 +33,7 @@ describe('Patients', () => {
         body: JSON.stringify({})
       } as unknown as APIGatewayProxyEventV2;
 
-      const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
+      const result = await getPatientsByCaregiverId(mockEvent) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
       expect(result.body).to.equal("Error: caregiver_id is required");
@@ -48,7 +48,7 @@ describe('Patients', () => {
         }
       } as unknown as APIGatewayProxyEventV2;
 
-      const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
+      const result = await getPatientsByCaregiverId(mockEvent) as APIGatewayProxyStructuredResultV2;
       const parsedResultBody = JSON.parse(result.body as string);
       const mockPatients = patients.filter(patient => patient.caregiver_id === mockCaregiverId);
 

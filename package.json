@@ -10,7 +10,8 @@
     "dev": "sst dev",
     "test": "mocha --loader=ts-node/esm \"src/__tests__/**/*.test.ts\"",
     "test:contract": "mocha --loader=ts-node/esm \"src/__tests__/contract/*.test.ts\"",
-    "db": "sst shell drizzle-kit"
+    "db": "sst shell drizzle-kit",
+    "db:migrate": "sst shell \"npx drizzle-kit push:pg\""
   },
   "dependencies": {
     "drizzle-orm": "^0.44.4",

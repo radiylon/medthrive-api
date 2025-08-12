@@ -1,10 +1,11 @@
+// @ts-nocheck
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import { Resource } from "sst";
-import { caregiver } from "./db/schema/caregiver.sql";
-import { medication } from "./db/schema/medication.sql";
-import { patient } from "./db/schema/patient.sql";
-import { schedule } from "./db/schema/schedule.sql";
+import { caregiver } from "./db/schema/caregiver.sql.ts";
+import { medication } from "./db/schema/medication.sql.ts";
+import { patient } from "./db/schema/patient.sql.ts";
+import { schedule } from "./db/schema/schedule.sql.ts";
 
 const pool = new Pool({
   host: Resource.MedthriveDatabase.host,

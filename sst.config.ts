@@ -3,9 +3,9 @@
 export default $config({
   app(input) {
     return {
-      name: "medthrive",
-      // removal: input?.stage === "production" ? "retain" : "remove",
-      // protect: ["production"].includes(input?.stage),
+      name: "medthrive-api",
+      removal: input?.stage === "production" ? "retain" : "remove",
+      protect: ["production"].includes(input?.stage),
       home: "aws",
       providers: {
         aws: {

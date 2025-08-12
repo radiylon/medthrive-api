@@ -1,5 +1,5 @@
 import { text, uuid, pgTable, boolean, timestamp, jsonb, integer } from "drizzle-orm/pg-core";
-import { patient } from './patient.sql';
+import { patient } from './patient.sql.ts';
 
 export const medication = pgTable("medication", {
   id: uuid("id").primaryKey().defaultRandom(),

@@ -1,6 +1,6 @@
 import { pgTable, uuid, timestamp } from "drizzle-orm/pg-core";
-import { medication } from './medication.sql';
-import { patient } from './patient.sql';
+import { medication } from './medication.sql.ts';
+import { patient } from './patient.sql.ts';
 
 export const schedule = pgTable("schedule", {
   id: uuid("id").primaryKey().defaultRandom(),

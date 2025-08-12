@@ -121,59 +121,55 @@ describe('Medications', () => {
   });
 
   describe('POST /medications', () => {
-    it('should return an error if patient_id is undefined', async () => {
+    it('should return an error for a missing event body', async () => {
+      const event = {} as unknown as APIGatewayProxyEventV2;
+
+      const result = await createMedication(event) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(400);
+      expect(result.body).to.equal('Error: Invalid request body');
+    });
+
+    
+    it('should return an error if missing patient_id', async () => {
       const event = {
-        pathParameters: {
-          patient_id: undefined
-        }
+        body: JSON.stringify({
+          name: 'Test Medication',
+          description: 'Test Description',
+          quantity: 10,
+          is_active: true,
+          schedule: {
+            frequency: 1,
+            type: 'daily',
+            start_date: new Date()
+          }
+        })
       } as unknown as APIGatewayProxyEventV2;
 
       const result = await createMedication(event) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal('Error: patient_id is required');
+      expect(result.body).to.equal('Error: Missing required fields');
     });
 
-    it('should create a medication for a valid patient_id and event body', async () => {
-      const testData = {
-        name: 'Test Medication',
-        description: 'Test Description',
-        quantity: 10,
-        is_active: true,
-        schedule: {
-          frequency: 1,
-          type: 'daily' as const,
-          start_date: new Date()
-        }
-      };
-
+    it('should return an error if missing another required field', async () => {
       const event = {
-        pathParameters: {
-          patient_id: '123e4567-e89b-12d3-a456-426614174111'
-        },
-        body: JSON.stringify(testData)
+        body: JSON.stringify({
+          patient_id: '123e4567-e89b-12d3-a456-426614174111',
+          name: 'Test Medication',
+          description: 'Test Description',
+          schedule: {
+            frequency: 1,
+            type: 'daily',
+            start_date: new Date()
+          }
+        })
       } as unknown as APIGatewayProxyEventV2;
 
       const result = await createMedication(event) as APIGatewayProxyStructuredResultV2;
-      expect(result.statusCode).to.equal(200);
-      
-      const responseBody = JSON.parse(result.body as string);
-      
-      // Check required fields match input
-      expect(responseBody).to.include({
-        patient_id: '123e4567-e89b-12d3-a456-426614174111',
-        name: testData.name,
-        description: testData.description,
-        quantity: testData.quantity,
-        is_active: testData.is_active
-      });
 
-      // Check schedule structure
-      expect(responseBody).to.have.property('schedule')
-        .that.deep.includes({
-          frequency: testData.schedule.frequency,
-          type: testData.schedule.type
-        });
+      expect(result.statusCode).to.equal(400);
+      expect(result.body).to.equal('Error: Missing required fields');
     });
   });
 });

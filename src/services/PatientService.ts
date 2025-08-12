@@ -1,7 +1,7 @@
 import { Patient } from "../types";
 import { v4 as uuidv4 } from 'uuid';
-import { db } from '../drizzle';
-import { patient as patientSchema } from '../db/schema/patient.sql';
+import { db } from '../drizzle.ts';
+import { patient as patientSchema } from '../db/schema/patient.sql.ts';
 import { patients as mockPatients } from '../__tests__/data/patients.ts';
 
 export default class PatientService {

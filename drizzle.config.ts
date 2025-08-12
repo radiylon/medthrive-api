@@ -7,11 +7,11 @@ export default defineConfig({
   schema: ["./src/**/*.sql.ts"],
   out: "./src/db/migrations",
   dbCredentials: {
-    host: Resource.MedthrivePostgres.host,
-    port: Resource.MedthrivePostgres.port,
-    user: Resource.MedthrivePostgres.username,
-    password: Resource.MedthrivePostgres.password,
-    database: Resource.MedthrivePostgres.database,
+    host: Resource.MedthriveDatabase.host,
+    port: Resource.MedthriveDatabase.port,
+    user: Resource.MedthriveDatabase.username,
+    password: Resource.MedthriveDatabase.password,
+    database: Resource.MedthriveDatabase.database,
     ssl: {
       rejectUnauthorized: false
     }

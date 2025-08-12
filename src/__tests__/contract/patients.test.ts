@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import getPatientsByCaregiverId from '../../lambdas/get-patients-by-caregiver-id/handler.ts';
-import getPatientById from '../../lambdas/get-patient-by-id/handler.ts';
+import getPatientsByCaregiverId from '../mocks/lambdas/get-patients-by-caregiver-id.ts';
+import getPatientById from '../mocks/lambdas/get-patient-by-id.ts';
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
 import { patients } from '../data/patients.ts';
 

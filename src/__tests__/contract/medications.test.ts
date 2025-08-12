@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import getMedicationsByPatientId from '../../lambdas/get-medications-by-patient-id/handler.ts';
-import getMedicationById from '../../lambdas/get-medication-by-id/handler.ts';
+import getMedicationsByPatientId from '../mocks/lambdas/get-medications-by-patient-id.ts';
+import getMedicationById from '../mocks/lambdas/get-medication-by-id.ts';
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
 import { medications } from '../data/medications.ts';
-import createMedication from '../../lambdas/create-medication/handler.ts';
+import createMedication from '../mocks/lambdas/create-medication.ts';
 
 // To run this test:  npm run test:contract -- --grep "Medications"
 

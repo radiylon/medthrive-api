@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "sst dev",
     "test": "sst dev -- mocha --loader=ts-node/esm \"src/__tests__/**/*.test.ts\"",
-    "test:contract": "mocha --loader=ts-node/esm \"src/__tests__/contract/*.test.ts\"",
+    "test:contract": "sst dev --mocha --loader=ts-node/esm \"src/__tests__/contract/*.test.ts\"",
     "db": "sst shell drizzle-kit",
     "db:migrate": "sst shell \"npx drizzle-kit push:pg\""
   },

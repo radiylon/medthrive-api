@@ -1,5 +1,5 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import ScheduleService from '../../services/ScheduleService.ts';
+import MockScheduleService from '../services/MockScheduleService.ts';
 
 export default async function getScheduleById(
   event: APIGatewayProxyEventV2
@@ -14,7 +14,7 @@ export default async function getScheduleById(
       };
     }
 
-    const scheduleService = new ScheduleService();
+    const scheduleService = new MockScheduleService();
     const schedule = await scheduleService.getScheduleById(scheduleId);
   
     return {

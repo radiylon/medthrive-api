@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
  * This is a mock implementation of the MedicationService class.
  * It is used to test the MedicationService class without relying on the actual database.
  */
-export default class MedicationService {
+export default class MockMedicationService {
   async getMedicationsByPatientId(patientId: string): Promise<Medication[]> {
     const medications = mockMedications.filter((medication) => medication.patient_id === patientId);
     return medications;

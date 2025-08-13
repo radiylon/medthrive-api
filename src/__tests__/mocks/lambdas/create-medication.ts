@@ -1,6 +1,6 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import MedicationService from '../services/MedicationService.ts';
-import ScheduleService from '../services/ScheduleService.ts';
+import MockMedicationService from '../services/MockMedicationService.ts';
+import MockScheduleService from '../services/MockScheduleService.ts';
 
 export default async function createMedication(
   event: APIGatewayProxyEventV2
@@ -24,10 +24,10 @@ export default async function createMedication(
       };
     }
 
-    const medicationService = new MedicationService();
+    const medicationService = new MockMedicationService();
     const medication = await medicationService.createMedication(eventBody);
 
-    const scheduleService = new ScheduleService();
+    const scheduleService = new MockScheduleService();
     await scheduleService.createSchedules(medication);
   
     return {

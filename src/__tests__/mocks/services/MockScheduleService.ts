@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { schedules as mockSchedules } from "../../data/schedules.ts";
 import { Medication } from "../../../types.ts";
 
-export default class ScheduleService {
+export default class MockScheduleService {
   async getSchedulesByPatientId(patientId: string): Promise<Schedule[]> {
     return mockSchedules.filter((schedule) => schedule.patient_id === patientId);
   }

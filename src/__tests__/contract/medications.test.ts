@@ -172,4 +172,14 @@ describe('Medications', () => {
       expect(result.body).to.equal('Error: Missing required fields');
     });
   });
+
+  describe('PATCH /medications/{medication_id}', () => {
+    it('should return an error if medication_id is undefined', async () => {
+      const event = {
+        pathParameters: {
+          medication_id: undefined
+        }
+      } as unknown as APIGatewayProxyEventV2;
+    });
+  });
 });

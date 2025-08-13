@@ -7,7 +7,7 @@ import { patients as mockPatients } from '../../data/patients.ts';
  * This is a mock implementation of the PatientService class.
  * It is used to test the PatientService class without relying on the actual database.
  */
-export default class PatientService {
+export default class MockPatientService {
   async getPatients(): Promise<Patient[]> {
     return mockPatients;
   }

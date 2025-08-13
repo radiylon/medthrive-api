@@ -1,5 +1,5 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import PatientService from '../services/PatientService.ts';
+import PatientService from '../services/MockPatientService.ts';
 
 export default async function createPatient(
   event: APIGatewayProxyEventV2

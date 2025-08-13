@@ -2,7 +2,7 @@ import { db } from "../drizzle.ts";
 import { patient as patientSchema } from "../db/schema/patient.sql.ts";
 import { caregiver as caregiverSchema } from "../db/schema/caregiver.sql.ts";
 
-async function main() {
+export default async function seed() {
   // Create initial caregiver
   const caregiverData = {
     first_name: 'John',
@@ -35,4 +35,4 @@ async function main() {
   console.log('Patient created:', patientResult.id);
 }
 
-await main();
+await seed();

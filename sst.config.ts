@@ -22,17 +22,6 @@ export default $config({
       version: "16.8",
     });
 
-    // Run seeding during deployment in production
-    if ($app.stage === "production") {
-      new sst.aws.Function("SeedDatabase", {
-        handler: "src/scripts/seed-handler.handler",
-        vpc,
-        link: [rds],
-        timeout: "5 minutes",
-        runtime: "nodejs18.x",
-      });
-    }
-
     new sst.x.DevCommand("Studio", {
       link: [rds],
       dev: {
@@ -107,6 +96,11 @@ export default $config({
     // mark-schedule
     api.route("PATCH /schedules/{schedule_id}/taken", {
       handler: "src/lambdas/mark-schedule/handler.default"
+    });
+
+    // seed-database
+    api.route("POST /seed-database", {
+      handler: "src/lambdas/seed-database/handler.default"
     });
 
     return { api: api.url };

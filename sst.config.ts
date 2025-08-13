@@ -25,7 +25,7 @@ export default $config({
     // Run seeding during deployment in production
     if ($app.stage === "production") {
       new sst.aws.Function("SeedDatabase", {
-        handler: "src/scripts/seed.ts",
+        handler: "src/scripts/seed-handler.handler",
         vpc,
         link: [rds],
         timeout: "5 minutes",

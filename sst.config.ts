@@ -42,15 +42,10 @@ export default $config({
         allowOrigins: [BASE_APP_URL]
       }
     });
-
-    // get-caregiver-by-id
-    api.route("GET /caregivers/{caregiver_id}", {
-      handler: "src/lambdas/get-caregiver-by-id/handler.default"
-    });
     
-    // get-caregiver-patients
-    api.route("GET /caregivers/{caregiver_id}/patients", {
-      handler: "src/lambdas/get-patients-by-caregiver-id/handler.default"
+    // get-patients
+    api.route("GET /patients", {
+      handler: "src/lambdas/get-patients/handler.default"
     });
 
     // create-patient

@@ -1,11 +1,8 @@
 import { pgTable, uuid, timestamp, text, date } from "drizzle-orm/pg-core";
-import { caregiver } from "./caregiver.sql.ts";
 
 export const patient = pgTable("patient", {
   id: uuid("id").primaryKey().defaultRandom(),
-  caregiver_id: uuid("caregiver_id")
-    .notNull()
-    .references(() => caregiver.id),
+  caregiver_id: uuid("caregiver_id").notNull(),
   first_name: text("first_name").notNull(),
   last_name: text("last_name").notNull(),
   email: text("email").notNull(),

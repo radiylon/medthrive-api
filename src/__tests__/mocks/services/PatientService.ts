@@ -8,8 +8,8 @@ import { patients as mockPatients } from '../../data/patients.ts';
  * It is used to test the PatientService class without relying on the actual database.
  */
 export default class PatientService {
-  async getPatientsByCaregiverId(caregiverId: string): Promise<Patient[]> {
-    return mockPatients.filter((patient) => patient.caregiver_id === caregiverId);
+  async getPatients(): Promise<Patient[]> {
+    return mockPatients;
   }
 
   async getPatientById(patientId: string): Promise<Patient> {

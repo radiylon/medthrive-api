@@ -5,8 +5,8 @@ import { patient as patientSchema } from '../db/schema/patient.sql.ts';
 import { eq } from "drizzle-orm";
 
 export default class PatientService {
-  async getPatientsByCaregiverId(caregiverId: string): Promise<Patient[]> {
-    const patients = await db.select().from(patientSchema).where(eq(patientSchema.caregiver_id, caregiverId));
+  async getPatients(): Promise<Patient[]> {
+    const patients = await db.select().from(patientSchema);
     return patients;
   }
 

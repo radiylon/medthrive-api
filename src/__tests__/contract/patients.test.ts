@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import getPatientsByCaregiverId from '../mocks/lambdas/get-patients-by-caregiver-id.ts';
+import getPatients from '../mocks/lambdas/get-patients.ts';
 import getPatientById from '../mocks/lambdas/get-patient-by-id.ts';
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
 import { patients } from '../data/patients.ts';
@@ -7,54 +7,14 @@ import { patients } from '../data/patients.ts';
 // To run this test:  npm run test:contract -- --grep "Patients"
 
 describe('Patients', () => {
-  describe('GET /caregivers/{caregiver_id}/patients', () => {
-    it('should return an error for an invalid event', async () => {
+  describe('GET /patients', () => {
+    it('should return a list of patients', async () => {
       const mockEvent = {} as unknown as APIGatewayProxyEventV2;
 
-      const result = await getPatientsByCaregiverId(mockEvent) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal("Error: caregiver_id is required");
-    });
-
-    it('should return an error for an invalid caregiver_id', async () => {
-      const mockEvent = { 
-        body: JSON.stringify({ caregiver_id: 123456 })
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await getPatientsByCaregiverId(mockEvent) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal("Error: caregiver_id is required");
-    });
-
-    it('should return an error for a missing caregiver_id', async () => {
-      const mockEvent = { 
-        body: JSON.stringify({})
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await getPatientsByCaregiverId(mockEvent) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal("Error: caregiver_id is required");
-    });
-
-    it('should return a list of patients with valid caregiver_id', async () => {
-      const mockCaregiverId = '123e4567-e89b-12d3-a456-426614174000';
-      
-      const mockEvent = { 
-        pathParameters: {
-          caregiver_id: mockCaregiverId
-        }
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await getPatientsByCaregiverId(mockEvent) as APIGatewayProxyStructuredResultV2;
-      const parsedResultBody = JSON.parse(result.body as string);
-      const mockPatients = patients.filter(patient => patient.caregiver_id === mockCaregiverId);
+      const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(200);
-      expect(parsedResultBody).to.be.an('array');
-      expect(result.body).to.equal(JSON.stringify(mockPatients));
+      expect(result.body).to.equal(JSON.stringify(patients));
     });
   });
   

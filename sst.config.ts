@@ -93,11 +93,6 @@ export default $config({
       handler: "src/lambdas/mark-schedule/handler.default"
     });
 
-    // seed-database
-    api.route("POST /seed-database", {
-      handler: "src/lambdas/seed-database/handler.default"
-    });
-
     return { api: api.url };
   },
 });

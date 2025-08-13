@@ -1,24 +1,19 @@
-import seed from "../../scripts/seed.ts";
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
+import seed from '../../scripts/seed';
 
-export default async function seedDatabase(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
+export default async function seedDatabase(
+  event: APIGatewayProxyEventV2
+): Promise<APIGatewayProxyResultV2> {
   try {
     await seed();
-    
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        message: 'Database seeded successfully',
-      })
+      body: JSON.stringify({ message: 'Database seeded successfully' })
     };
-  } catch (error) {
-    console.error('Error seeding database:', error);
+  } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        message: 'Error seeding database',
-        error: error instanceof Error ? error.message : 'Unknown error'
-      })
+      body: err instanceof Error ? err.message : "Error: Failed to seed database"
     };
   }
-}
+};

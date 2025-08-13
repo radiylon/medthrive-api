@@ -21,10 +21,6 @@ declare module "sst" {
       "bastion": string
       "type": "sst.aws.Vpc"
     }
-    "SeedDatabase": {
-      "name": string
-      "type": "sst.aws.Function"
-    }
   }
 }
 /// <reference path="sst-env.d.ts" />

@@ -29,13 +29,17 @@ export default $config({
       },
     });
 
+    const BASE_APP_URL = $app.stage !== "production" 
+      ? "http://localhost:3000"
+      : "https://diiavvui1t903.cloudfront.net";
+
     const api = new sst.aws.ApiGatewayV2("MedthriveApi", { 
       vpc, 
       link: [rds],
       cors: {
         allowHeaders: ["*"],
         allowMethods: ["*"],
-        allowOrigins: ["http://localhost:3000", "https://d3iqr4nk3h4ypf.cloudfront.net"]
+        allowOrigins: [BASE_APP_URL]
       }
     });
 

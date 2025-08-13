@@ -2,7 +2,7 @@ export interface Medication {
   id: string;
   patient_id: string;
   name: string;
-  description?: string;
+  description?: string | null;
   quantity: number;
   is_active: boolean;
   schedule: {
@@ -30,7 +30,7 @@ export interface Caregiver {
   last_name: string;
   email: string;
   phone_number: string;
-  date_of_birth: Date;
+  date_of_birth: string;
   gender: string;
   created_at: Date;
   updated_at: Date;
@@ -43,7 +43,7 @@ export interface Patient {
   last_name: string;
   email: string;
   phone_number: string;
-  date_of_birth: Date;
+  date_of_birth: string;
   gender: string;
   created_at: Date;
   updated_at: Date;

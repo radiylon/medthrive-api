@@ -10,8 +10,9 @@
     "dev": "sst dev",
     "test": "mocha --loader=ts-node/esm \"src/__tests__/**/*.test.ts\"",
     "test:contract": "mocha --loader=ts-node/esm \"src/__tests__/contract/*.test.ts\"",
-    "db": "sst shell drizzle-kit",
-    "db:migrate": "sst shell \"npx drizzle-kit push:pg\""
+    "db:push": "sst shell drizzle-kit push",
+    "db:reset": "sst dev -- tsx src/scripts/reset.ts && sst shell drizzle-kit push",
+    "db:seed": "sst dev -- tsx src/scripts/seed.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.4",
@@ -28,6 +29,7 @@
     "chai": "^4.3.10",
     "drizzle-kit": "^0.31.4",
     "mocha": "^10.2.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.4"
   }
 }

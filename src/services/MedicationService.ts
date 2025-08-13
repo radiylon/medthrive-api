@@ -1,26 +1,26 @@
 import { Medication } from "../types";
-import { medications as mockMedications } from "../__tests__/data/medications.ts"
 import { v4 as uuidv4 } from 'uuid';
 import { db } from "../drizzle.ts";
 import { medication as medicationSchema } from "../db/schema/medication.sql.ts";
+import { eq } from "drizzle-orm";
 
 export default class MedicationService {
   async getMedicationsByPatientId(patientId: string): Promise<Medication[]> {
-    const medications = mockMedications.filter((medication) => medication.patient_id === patientId);
+    const medications = await db.select().from(medicationSchema).where(eq(medicationSchema.patient_id, patientId));
     return medications;
   }
 
   async getMedicationById(medicationId: string): Promise<Medication> {
-    const medication = mockMedications.find((medication) => medication.id === medicationId);
+    const medication = await db.select().from(medicationSchema).where(eq(medicationSchema.id, medicationId));
 
-    if (!medication) {
+    if (!medication || medication.length === 0) {
       throw new Error('Error: Medication not found');
     }
 
-    return medication;
+    return medication[0];
   }
 
-  async createMedication(medication: Medication): Promise<Medication> {
+  async createMedication(medication: Medication): Promise<string> {
     const newMedication: Medication = {
       id: uuidv4(),
       patient_id: medication.patient_id!,
@@ -35,18 +35,12 @@ export default class MedicationService {
 
     await db.insert(medicationSchema).values(newMedication);
 
-    return newMedication;
+    return 'Medication created successfully';
   }
 
-  async updateMedication(medication: Medication): Promise<Medication> {
-    const updatedMedication = mockMedications.find((medication) => medication.id === medication.id);
+  async updateMedication(medicationData: { id: string } & Partial<Omit<Medication, 'id'>>): Promise<string> {
+    await db.update(medicationSchema).set(medicationData).where(eq(medicationSchema.id, medicationData.id!));
 
-    if (!updatedMedication) {
-      throw new Error('Error: Medication not found');
-    }
-
-    Object.assign(updatedMedication, medication);
-
-    return updatedMedication;
+    return 'Medication updated successfully';
   }
 }

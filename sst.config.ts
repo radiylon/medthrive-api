@@ -16,11 +16,10 @@ export default $config({
     };
   },
   async run() {
-    const vpc = new sst.aws.Vpc("MedthriveVpc", { bastion: true, nat: "ec2" });
+    const vpc = new sst.aws.Vpc("MedthriveVpc", { bastion: true });
     const rds = new sst.aws.Postgres("MedthriveDatabase", { 
       vpc,
       version: "16.8",
-      proxy: true
     });
 
     new sst.x.DevCommand("Studio", {

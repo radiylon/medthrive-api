@@ -22,6 +22,17 @@ export default $config({
       version: "16.8",
     });
 
+    // Run seeding during deployment in production
+    if ($app.stage === "production") {
+      new sst.aws.Function("SeedDatabase", {
+        handler: "src/scripts/seed.ts",
+        vpc,
+        link: [rds],
+        timeout: "5 minutes",
+        runtime: "nodejs18.x",
+      });
+    }
+
     new sst.x.DevCommand("Studio", {
       link: [rds],
       dev: {

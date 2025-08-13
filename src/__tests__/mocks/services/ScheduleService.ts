@@ -1,7 +1,7 @@
-import { Schedule } from "../../../types/index.ts";
+import { Schedule } from "../../../types.ts";
 import { v4 as uuidv4 } from 'uuid';
 import { schedules as mockSchedules } from "../../data/schedules.ts";
-import { Medication } from "../../../types/index.ts";
+import { Medication } from "../../../types.ts";
 
 export default class ScheduleService {
   async getSchedulesByPatientId(patientId: string): Promise<Schedule[]> {

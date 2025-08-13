@@ -1,4 +1,4 @@
-import { Medication } from "../../../types/index.ts";
+import { Medication } from "../../../types.ts";
 import { medications as mockMedications } from "../../data/medications.ts"
 import { v4 as uuidv4 } from 'uuid';
 

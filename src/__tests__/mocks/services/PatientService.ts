@@ -1,4 +1,4 @@
-import { Patient } from "../../../types/index.ts";
+import { Patient } from "../../../types.ts";
 import { v4 as uuidv4 } from 'uuid';
 import { patients as mockPatients } from '../../data/patients.ts';
 

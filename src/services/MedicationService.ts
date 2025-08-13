@@ -1,4 +1,4 @@
-import { Medication } from "../types";
+import { Medication } from "../types.ts";
 import { v4 as uuidv4 } from 'uuid';
 import { db } from "../drizzle.ts";
 import { medication as medicationSchema } from "../db/schema/medication.sql.ts";

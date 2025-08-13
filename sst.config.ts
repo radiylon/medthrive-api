@@ -39,6 +39,11 @@ export default $config({
       }
     });
 
+    // get-caregiver-by-id
+    api.route("GET /caregivers/{caregiver_id}", {
+      handler: "src/lambdas/get-caregiver-by-id/handler.default"
+    });
+    
     // get-caregiver-patients
     api.route("GET /caregivers/{caregiver_id}/patients", {
       handler: "src/lambdas/get-patients-by-caregiver-id/handler.default"

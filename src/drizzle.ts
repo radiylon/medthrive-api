@@ -2,7 +2,6 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import { Resource } from "sst";
-import { caregiver } from "./db/schema/caregiver.sql.ts";
 import { medication } from "./db/schema/medication.sql.ts";
 import { patient } from "./db/schema/patient.sql.ts";
 import { schedule } from "./db/schema/schedule.sql.ts";
@@ -18,6 +17,6 @@ const pool = new Pool({
   }
 });
 
-const schema = { caregiver, medication, patient, schedule };
+const schema = { medication, patient, schedule };
 
 export const db = drizzle(pool, { schema });

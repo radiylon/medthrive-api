@@ -6,6 +6,8 @@ export default async function getPatients(event: APIGatewayProxyEventV2): Promis
     const patientService = new PatientService();
     const patients = await patientService.getPatients();
 
+    console.log(patients);
+
     return {
       statusCode: 200,
       body: JSON.stringify(patients)

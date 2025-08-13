@@ -24,18 +24,6 @@ export interface Schedule {
   updated_at: Date;
 }
 
-export interface Caregiver {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: string;
-  date_of_birth: string;
-  gender: string;
-  created_at: Date;
-  updated_at: Date;
-}
-
 export interface Patient {
   id: string;
   caregiver_id: string;

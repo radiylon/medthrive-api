@@ -16,8 +16,8 @@ export default $config({
     };
   },
   async run() {
-    const vpc = new sst.aws.Vpc("MedthriveVpc", { bastion: true });
-    const rds = new sst.aws.Postgres("MedthriveDatabase", { 
+    const vpc = new sst.aws.Vpc("MedVpc", { bastion: true });
+    const rds = new sst.aws.Postgres("MedDatabase", { 
       vpc,
       version: "16.8",
     });
@@ -33,7 +33,7 @@ export default $config({
       ? "http://localhost:3000"
       : "https://diiavvui1t903.cloudfront.net";
 
-    const api = new sst.aws.ApiGatewayV2("MedthriveApi", { 
+    const api = new sst.aws.ApiGatewayV2("MedApi", { 
       vpc, 
       link: [rds],
       cors: {

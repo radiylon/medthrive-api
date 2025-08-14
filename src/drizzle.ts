@@ -7,11 +7,11 @@ import { patient } from "./db/schema/patient.sql.ts";
 import { schedule } from "./db/schema/schedule.sql.ts";
 
 const pool = new Pool({
-  host: Resource.MedthriveDatabase.host,
-  port: Resource.MedthriveDatabase.port,
-  user: Resource.MedthriveDatabase.username,
-  password: Resource.MedthriveDatabase.password,
-  database: Resource.MedthriveDatabase.database,
+  host: Resource.MedDatabase.host,
+  port: Resource.MedDatabase.port,
+  user: Resource.MedDatabase.username,
+  password: Resource.MedDatabase.password,
+  database: Resource.MedDatabase.database,
   ssl: {
     rejectUnauthorized: false
   }

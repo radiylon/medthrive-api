@@ -5,11 +5,11 @@
 
 declare module "sst" {
   export interface Resource {
-    "MedthriveApi": {
+    "MedApi": {
       "type": "sst.aws.ApiGatewayV2"
       "url": string
     }
-    "MedthriveDatabase": {
+    "MedDatabase": {
       "database": string
       "host": string
       "password": string
@@ -17,7 +17,7 @@ declare module "sst" {
       "type": "sst.aws.Postgres"
       "username": string
     }
-    "MedthriveVpc": {
+    "MedVpc": {
       "bastion": string
       "type": "sst.aws.Vpc"
     }

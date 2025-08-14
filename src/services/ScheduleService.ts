@@ -2,14 +2,18 @@ import { Schedule } from "../types.ts";
 import { v4 as uuidv4 } from 'uuid';
 import { schedules as mockSchedules } from "../__tests__/data/schedules.ts";
 import { Medication } from "../types.ts";
+import { db } from '../drizzle.ts'
+import { schedule as scheduleSchema } from "../db/schema/schedule.sql.ts";
+import { eq } from "drizzle-orm";
 
 export default class ScheduleService {
   async getSchedulesByPatientId(patientId: string): Promise<Schedule[]> {
-    return mockSchedules.filter((schedule) => schedule.patient_id === patientId);
+    const schedules = await db.select().from(scheduleSchema).where(eq(scheduleSchema.patient_id, patientId));
+    return schedules;
   }
 
   async getSchedulesByMedicationId(medicationId: string): Promise<Schedule[]> {
-    const schedules = mockSchedules.filter((schedule) => schedule.medication_id === medicationId);
+    const schedules = await db.select().from(scheduleSchema).where(eq(scheduleSchema.medication_id, medicationId));
 
     if (!schedules) {
       throw new Error('Error: Schedule not found');
@@ -19,13 +23,13 @@ export default class ScheduleService {
   }
   
   async getScheduleById(scheduleId: string): Promise<Schedule> {
-    const schedule = mockSchedules.find((schedule) => schedule.id === scheduleId);
+    const schedule = await db.select().from(scheduleSchema).where(eq(scheduleSchema.id, scheduleId));
 
-    if (!schedule) {
+    if (!schedule || schedule.length === 0) {
       throw new Error('Error: Schedule not found');
     }
 
-    return schedule;
+    return schedule[0];
   }
 
   async createSchedules(medication: Medication): Promise<void> {
@@ -52,7 +56,7 @@ export default class ScheduleService {
         updated_at: new Date()
       };
 
-      mockSchedules.push(newSchedule);
+      await db.insert(scheduleSchema).values(newSchedule);
     }
   }
 

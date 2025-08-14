@@ -25,10 +25,10 @@ export default async function createMedication(
     }
 
     const medicationService = new MedicationService();
-    await medicationService.createMedication(eventBody);
-
     const scheduleService = new ScheduleService();
-    await scheduleService.createSchedules(eventBody);
+
+    const medication = await medicationService.createMedication(eventBody);
+    await scheduleService.createSchedules(medication);
   
     return {
       statusCode: 200,

@@ -26,12 +26,7 @@ export default class PatientService {
   }
 
   async createPatient(patient: Patient): Promise<string> {
-    const newPatient = {
-      ...patient,
-      id: uuidv4()
-    };
-
-    await db.insert(patientSchema).values(newPatient);
+    await db.insert(patientSchema).values(patient);
     
     return 'Patient created successfully';
   }

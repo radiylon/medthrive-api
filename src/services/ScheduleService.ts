@@ -32,8 +32,8 @@ export default class ScheduleService {
     return schedule[0];
   }
 
-  async createSchedules(medication: Medication): Promise<void> {
-    const { quantity, schedule } = medication;
+  async createSchedules(medicationData: Medication): Promise<string> {
+    const { quantity, schedule } = medicationData;
     const { frequency, type, start_date } = schedule;
     const startDate = new Date(start_date);
     
@@ -46,18 +46,15 @@ export default class ScheduleService {
         scheduledDate.setDate(startDate.getDate() + i * frequency * 7);
       }
 
-      const newSchedule: Schedule = {
-        id: uuidv4(),
-        medication_id: medication.id,
-        patient_id: medication.patient_id,
+      await db.insert(scheduleSchema).values({
+        medication_id: medicationData.id,
+        patient_id: medicationData.patient_id,
         scheduled_date: scheduledDate,
-        taken_at: null,
-        created_at: new Date(),
-        updated_at: new Date()
-      };
-
-      await db.insert(scheduleSchema).values(newSchedule);
+        taken_at: null
+      });
     }
+    
+    return 'Schedules created successfully';
   }
 
   async markScheduleAsTaken(scheduleId: string): Promise<Schedule> {

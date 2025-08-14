@@ -15,22 +15,21 @@ export default class MedicationService {
     return medication[0];
   }
 
-  async createMedication(medication: Medication): Promise<string> {
-    const newMedication: Medication = {
-      id: uuidv4(),
+  async createMedication(medication: Medication): Promise<Medication> {
+    const newMedication: Omit<Medication, 'id' | 'created_at' | 'updated_at'> = {
       patient_id: medication.patient_id!,
       name: medication.name!,
       description: medication.description || "",
       quantity: medication.quantity!,
       is_active: medication.is_active ?? true,
       schedule: medication.schedule!,
-      created_at: new Date(),
-      updated_at: new Date()
     };
 
-    await db.insert(medicationSchema).values(newMedication);
+    const [result] = await db.insert(medicationSchema)
+      .values(newMedication)
+      .returning();
 
-    return 'Medication created successfully';
+    return result;
   }
 
   async updateMedication(medicationData: { id: string } & Partial<Omit<Medication, 'id'>>): Promise<string> {

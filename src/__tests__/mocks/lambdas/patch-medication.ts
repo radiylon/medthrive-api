@@ -5,7 +5,22 @@ export default async function patchMedication(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   try {
+    const medicationId = event.pathParameters?.medication_id;
     
+    if (!medicationId) {
+      return {
+        statusCode: 400,
+        body: "Error: medication_id is required"
+      };
+    }
+
+    if (typeof medicationId !== 'string') {
+      return {
+        statusCode: 400,
+        body: "Error: medication_id is not a string"
+      };
+    }
+
     const eventBody = event.body ? JSON.parse(event.body) : null;
     
     if (!eventBody) {
@@ -14,16 +29,7 @@ export default async function patchMedication(
         body: "Error: Invalid request body"
       };
     }
-
-    const medicationId = eventBody?.medication_id;
   
-    if (!medicationId) {
-      return {
-        statusCode: 400,
-        body: "Error: medication_id is required"
-      };
-    }
-
     const medicationService = new MockMedicationService();
     const medication = await medicationService.updateMedication(eventBody);
   

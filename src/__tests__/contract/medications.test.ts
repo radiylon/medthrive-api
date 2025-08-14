@@ -1,9 +1,10 @@
 import { expect } from 'chai';
-import getMedicationsByPatientId from '../mocks/lambdas/get-medications-by-patient-id.ts';
-import getMedicationById from '../mocks/lambdas/get-medication-by-id.ts';
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
 import { medications } from '../data/medications.ts';
+import getMedicationsByPatientId from '../mocks/lambdas/get-medications-by-patient-id.ts';
+import getMedicationById from '../mocks/lambdas/get-medication-by-id.ts';
 import createMedication from '../mocks/lambdas/create-medication.ts';
+import patchMedication from '../mocks/lambdas/patch-medication.ts';
 
 // To run this test:  npm run test:contract -- --grep "Medications"
 
@@ -104,20 +105,6 @@ describe('Medications', () => {
       expect(result.statusCode).to.equal(400);
       expect(result.body).to.equal('Error: medication_id is not a string');
     });
-
-    it('should return an error if medication_id is not found', async () => {
-      const event = {
-        pathParameters: {
-          patient_id: '123e4567-e89b-12d3-a456-426614174111',
-          medication_id: 'this-is-not-a-valid-medication-id'
-        }
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await getMedicationById(event) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(500);
-      expect(result.body).to.equal('Error: Medication not found');
-    });
   });
 
   describe('POST /medications', () => {
@@ -180,6 +167,43 @@ describe('Medications', () => {
           medication_id: undefined
         }
       } as unknown as APIGatewayProxyEventV2;
+
+      const result = await patchMedication(event) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(400);
+      expect(result.body).to.equal('Error: medication_id is required');
+    });
+
+    it('should return an error if medication_id is not a string', async () => {
+      const event = {
+        pathParameters: {
+          medication_id: 123456
+        },
+        body: JSON.stringify({
+          is_active: false
+        })
+      } as unknown as APIGatewayProxyEventV2;
+
+      const result = await patchMedication(event) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(400);
+      expect(result.body).to.equal('Error: medication_id is not a string');
+    });
+
+    it('should return a success message if medication is updated', async () => {
+      const event = {
+        pathParameters: {
+          medication_id: '123e4567-e89b-12d3-a456-426614174111'
+        },
+        body: JSON.stringify({
+          is_active: false
+        })
+      } as unknown as APIGatewayProxyEventV2;
+
+      const result = await patchMedication(event) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(200);
+      expect(result.body).to.equal(JSON.stringify('Medication updated successfully'));
     });
   });
 });

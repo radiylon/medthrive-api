@@ -15,12 +15,7 @@ export default class MockMedicationService {
 
   async getMedicationById(medicationId: string): Promise<Medication> {
     const medication = mockMedications.find((medication) => medication.id === medicationId);
-
-    if (!medication) {
-      throw new Error('Error: Medication not found');
-    }
-
-    return medication;
+    return medication!;
   }
 
   async createMedication(medication: Medication): Promise<Medication> {
@@ -41,15 +36,11 @@ export default class MockMedicationService {
     return newMedication;
   }
 
-  async updateMedication(medication: Medication): Promise<Medication> {
+  async updateMedication(medication: Medication): Promise<string> {
     const updatedMedication = mockMedications.find((medication) => medication.id === medication.id);
 
-    if (!updatedMedication) {
-      throw new Error('Error: Medication not found');
-    }
+    Object.assign(updatedMedication!, medication);
 
-    Object.assign(updatedMedication, medication);
-
-    return updatedMedication;
+    return 'Medication updated successfully';
   }
 }

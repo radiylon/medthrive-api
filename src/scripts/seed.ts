@@ -10,6 +10,12 @@ export default async function seed() {
     phone_number: '1234567890',
     date_of_birth: '1990-01-01',
     gender: 'male',
+    address: {
+      street: '123 Main St',
+      city: 'San Diego',
+      state: 'CA',
+      zipcode: '92122'
+    },
     caregiver_id: uuidv4()
   };
 

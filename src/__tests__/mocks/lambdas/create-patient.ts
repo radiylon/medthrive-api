@@ -14,7 +14,15 @@ export default async function createPatient(
       };
     }
   
-    if (!eventBody.caregiver_id || !eventBody.first_name || !eventBody.last_name || !eventBody.email || !eventBody.phone_number || !eventBody.date_of_birth) {
+    if (
+        !eventBody.caregiver_id || 
+        !eventBody.first_name || 
+        !eventBody.last_name || 
+        !eventBody.email || 
+        !eventBody.phone_number || 
+        !eventBody.date_of_birth || 
+        !eventBody.address
+      ) {
       return {
         statusCode: 400,
         body: "Error: Missing required fields"

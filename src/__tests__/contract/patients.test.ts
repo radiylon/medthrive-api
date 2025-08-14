@@ -99,7 +99,13 @@ describe('Patients', () => {
           email: 'john.doe@example.com',
           phone_number: '1234567890',
           date_of_birth: '1990-01-01',
-          caregiver_id: '123e4567-e89b-12d3-a456-426614174000'
+          caregiver_id: '123e4567-e89b-12d3-a456-426614174000',
+          address: {
+            street: '123 Main St',
+            city: 'San Diego',
+            state: 'CA',
+            zipcode: '92122'
+          }
         })
       } as unknown as APIGatewayProxyEventV2;
 

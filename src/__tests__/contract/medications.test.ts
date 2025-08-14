@@ -160,42 +160,40 @@ describe('Medications', () => {
     });
   });
 
-  describe('PATCH /medications/{medication_id}', () => {
-    it('should return an error if medication_id is undefined', async () => {
+  describe('PATCH /medications', () => {
+    it('should return an error if id is undefined', async () => {
       const event = {
-        pathParameters: {
-          medication_id: undefined
-        }
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await patchMedication(event) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal('Error: medication_id is required');
-    });
-
-    it('should return an error if medication_id is not a string', async () => {
-      const event = {
-        pathParameters: {
-          medication_id: 123456
-        },
         body: JSON.stringify({
-          is_active: false
+          id: undefined
         })
       } as unknown as APIGatewayProxyEventV2;
 
       const result = await patchMedication(event) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal('Error: medication_id is not a string');
+      expect(result.body).to.equal('Error: id is required');
+    });
+
+    it('should return an error if id is not a string', async () => {
+      const event = {
+        body: JSON.stringify({
+          is_active: false,
+          id: {}
+        })
+      } as unknown as APIGatewayProxyEventV2;
+
+      const result = await patchMedication(event) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(400);
+      expect(result.body).to.equal('Error: id is not a string');
     });
 
     it('should return a success message if medication is updated', async () => {
+      const mockMedication = medications[0];
+      
       const event = {
-        pathParameters: {
-          medication_id: '123e4567-e89b-12d3-a456-426614174111'
-        },
         body: JSON.stringify({
+          id: mockMedication.id,
           is_active: false
         })
       } as unknown as APIGatewayProxyEventV2;

@@ -74,7 +74,7 @@ export default $config({
     });
 
     // patch-medication
-    api.route("PATCH /medications/{medication_id}", {
+    api.route("PATCH /medications", {
       handler: "src/lambdas/patch-medication/handler.default"
     });
 

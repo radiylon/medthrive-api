@@ -32,7 +32,7 @@ export default class MedicationService {
     return result;
   }
 
-  async updateMedication(medicationData: { id: string } & Partial<Omit<Medication, 'id'>>): Promise<string> {
+  async updateMedication(medicationData: Partial<Medication>): Promise<string> {
     await db.update(medicationSchema).set(medicationData).where(eq(medicationSchema.id, medicationData.id!));
 
     return 'Medication updated successfully';

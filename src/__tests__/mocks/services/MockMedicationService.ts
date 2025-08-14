@@ -37,9 +37,21 @@ export default class MockMedicationService {
   }
 
   async updateMedication(medication: Medication): Promise<string> {
-    const updatedMedication = mockMedications.find((medication) => medication.id === medication.id);
+    // Remove the old medication
+    const index = mockMedications.findIndex((m) => m.id === medication.id);
+    if (index === -1) {
+      throw new Error('Medication not found');
+    }
+    
+    // Create updated medication
+    const updatedMedication = {
+      ...mockMedications[index],
+      ...medication,
+      updated_at: new Date()
+    };
 
-    Object.assign(updatedMedication!, medication);
+    // Replace in array
+    mockMedications.splice(index, 1, updatedMedication);
 
     return 'Medication updated successfully';
   }

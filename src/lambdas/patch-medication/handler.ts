@@ -15,12 +15,19 @@ export default async function patchMedication(
       };
     }
 
-    const medicationId = eventBody?.medication_id;
-  
+    const medicationId = eventBody?.id;
+
     if (!medicationId) {
       return {
         statusCode: 400,
-        body: "Error: medication_id is required"
+        body: "Error: id is required"
+      };
+    }
+
+    if (typeof medicationId !== 'string') {
+      return {
+        statusCode: 400,
+        body: "Error: id is not a string"
       };
     }
 

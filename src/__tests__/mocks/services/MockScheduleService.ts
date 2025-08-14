@@ -17,16 +17,6 @@ export default class MockScheduleService {
 
     return schedules;
   }
-  
-  async getScheduleById(scheduleId: string): Promise<Schedule> {
-    const schedule = mockSchedules.find((schedule) => schedule.id === scheduleId);
-
-    if (!schedule) {
-      throw new Error('Error: Schedule not found');
-    }
-
-    return schedule;
-  }
 
   async createSchedules(medication: Medication): Promise<void> {
     const { quantity, schedule } = medication;

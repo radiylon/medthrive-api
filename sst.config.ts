@@ -83,11 +83,6 @@ export default $config({
       handler: "src/lambdas/get-schedules-by-medication-id/handler.default"
     });
 
-    // get-schedule-by-id
-    api.route("GET /schedules/{schedule_id}", {
-      handler: "src/lambdas/get-schedule-by-id/handler.default"
-    });
-
     // mark-schedule
     api.route("PATCH /schedules/{schedule_id}/taken", {
       handler: "src/lambdas/mark-schedule/handler.default"

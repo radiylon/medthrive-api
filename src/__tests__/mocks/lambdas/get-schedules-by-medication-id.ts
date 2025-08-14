@@ -10,7 +10,14 @@ export default async function getSchedulesByMedicationId(
     if (!medicationId) {
       return {
         statusCode: 400,
-        body: "Error: schedule_id is required"
+        body: "Error: medication_id is required"
+      };
+    }
+
+    if (typeof medicationId !== 'string') {
+      return {
+        statusCode: 400,
+        body: "Error: medication_id is not a string"
       };
     }
 

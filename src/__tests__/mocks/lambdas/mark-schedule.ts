@@ -22,11 +22,11 @@ export default async function markSchedule(
     }
 
     const scheduleService = new MockScheduleService();
-    const schedule = await scheduleService.markScheduleAsTaken(scheduleId);
+    await scheduleService.markScheduleAsTaken(scheduleId);
   
     return {
       statusCode: 200,
-      body: JSON.stringify(schedule)
+      body: JSON.stringify('Schedule successfully marked as taken')
     };
   } catch (err) {
     return {

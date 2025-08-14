@@ -1,10 +1,8 @@
 import { Schedule } from "../types.ts";
-import { v4 as uuidv4 } from 'uuid';
-import { schedules as mockSchedules } from "../__tests__/data/schedules.ts";
 import { Medication } from "../types.ts";
 import { db } from '../drizzle.ts'
 import { schedule as scheduleSchema } from "../db/schema/schedule.sql.ts";
-import { eq } from "drizzle-orm";
+import { eq, asc } from "drizzle-orm";
 
 export default class ScheduleService {
   async getSchedulesByPatientId(patientId: string): Promise<Schedule[]> {
@@ -13,12 +11,10 @@ export default class ScheduleService {
   }
 
   async getSchedulesByMedicationId(medicationId: string): Promise<Schedule[]> {
-    const schedules = await db.select().from(scheduleSchema).where(eq(scheduleSchema.medication_id, medicationId));
-
-    if (!schedules) {
-      throw new Error('Error: Schedule not found');
-    }
-
+    const schedules = await db.select()
+      .from(scheduleSchema)
+      .where(eq(scheduleSchema.medication_id, medicationId))
+      .orderBy(asc(scheduleSchema.scheduled_date));
     return schedules;
   }
   
@@ -57,16 +53,16 @@ export default class ScheduleService {
     return 'Schedules created successfully';
   }
 
-  async markScheduleAsTaken(scheduleId: string): Promise<Schedule> {
-    const schedule = mockSchedules.find((schedule) => schedule.id === scheduleId);
+  async markScheduleAsTaken(scheduleId: string): Promise<string> {
+    const schedule = await db.update(scheduleSchema).set({ 
+      taken_at: new Date(),
+      updated_at: new Date()
+    }).where(eq(scheduleSchema.id, scheduleId));
 
     if (!schedule) {
       throw new Error('Error: Schedule not found');
     }
 
-    schedule.taken_at = new Date();
-    schedule.updated_at = new Date();
-
-    return schedule;
+    return 'Schedule successfully marked as taken';
   }
 }

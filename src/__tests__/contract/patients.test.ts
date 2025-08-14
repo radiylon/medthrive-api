@@ -1,60 +1,21 @@
 import { expect } from 'chai';
-import getPatients from '../../lambdas/get-patients/handler.ts';
-import getPatientById from '../../lambdas/get-patient-by-id/handler.ts';
+import getPatients from '../mocks/lambdas/get-patients.ts';
+import getPatientById from '../mocks/lambdas/get-patient-by-id.ts';
+import createPatient from '../mocks/lambdas/create-patient.ts';
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
 import { patients } from '../data/patients.ts';
 
 // To run this test:  npm run test:contract -- --grep "Patients"
 
 describe('Patients', () => {
-  describe('GET /patients/', () => {
-    it('should return an error for an invalid event', async () => {
+  describe('GET /patients', () => {
+    it('should return a list of patients', async () => {
       const mockEvent = {} as unknown as APIGatewayProxyEventV2;
 
       const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
 
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal("Error: caregiver_id is required");
-    });
-
-    it('should return an error for an invalid caregiver_id', async () => {
-      const mockEvent = { 
-        body: JSON.stringify({ caregiver_id: 123456 })
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal("Error: caregiver_id is required");
-    });
-
-    it('should return an error for a missing caregiver_id', async () => {
-      const mockEvent = { 
-        body: JSON.stringify({})
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal("Error: caregiver_id is required");
-    });
-
-    it('should return a list of patients with valid caregiver_id', async () => {
-      const mockCaregiverId = '123e4567-e89b-12d3-a456-426614174000';
-      
-      const mockEvent = { 
-        pathParameters: {
-          caregiver_id: mockCaregiverId
-        }
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await getPatients(mockEvent) as APIGatewayProxyStructuredResultV2;
-      const parsedResultBody = JSON.parse(result.body as string);
-      const mockPatients = patients.filter(patient => patient.caregiver_id === mockCaregiverId);
-
       expect(result.statusCode).to.equal(200);
-      expect(parsedResultBody).to.be.an('array');
-      expect(result.body).to.equal(JSON.stringify(mockPatients));
+      expect(result.body).to.equal(JSON.stringify(patients));
     });
   });
   
@@ -106,6 +67,52 @@ describe('Patients', () => {
   
       expect(result.statusCode).to.equal(200);
       expect(result.body).to.equal(JSON.stringify(mockPatient));
+    });
+  });
+
+  describe('POST /patients', () => {
+    it('should return an error if the request body is invalid', async () => {
+      const mockEvent = {} as unknown as APIGatewayProxyEventV2;
+
+      const result = await createPatient(mockEvent) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(400);
+      expect(result.body).to.equal("Error: Invalid request body");
+    });
+
+    it('should return an error if the request body is missing required fields', async () => {
+      const mockEvent = {
+        body: JSON.stringify({})
+      } as unknown as APIGatewayProxyEventV2;
+
+      const result = await createPatient(mockEvent) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(400);
+      expect(result.body).to.equal("Error: Missing required fields");
+    });
+
+    it('should return a success message if a patient is created', async () => {
+      const mockEvent = {
+        body: JSON.stringify({
+          first_name: 'John',
+          last_name: 'Doe',
+          email: 'john.doe@example.com',
+          phone_number: '1234567890',
+          date_of_birth: '1990-01-01',
+          caregiver_id: '123e4567-e89b-12d3-a456-426614174000',
+          address: {
+            street: '123 Main St',
+            city: 'San Diego',
+            state: 'CA',
+            zipcode: '92122'
+          }
+        })
+      } as unknown as APIGatewayProxyEventV2;
+
+      const result = await createPatient(mockEvent) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(200);
+      expect(result.body).to.equal(JSON.stringify('Patient created successfully'));
     });
   });
 });

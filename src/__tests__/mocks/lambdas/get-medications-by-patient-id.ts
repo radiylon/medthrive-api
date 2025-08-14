@@ -1,7 +1,7 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import MedicationService from '../../services/MedicationService.ts';
+import MockMedicationService from '../services/MockMedicationService.ts';
 
-export default async function getMedications(
+export default async function getMedicationsByPatientId(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   try {
@@ -21,7 +21,7 @@ export default async function getMedications(
       };
     }
   
-    const medicationService = new MedicationService();
+    const medicationService = new MockMedicationService();
     const medications = await medicationService.getMedicationsByPatientId(patientId);
   
     return {

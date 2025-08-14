@@ -8,8 +8,14 @@ export const patients: Patient[] = [
     last_name: "Wilson",
     email: "bob.wilson@example.com",
     phone_number: "+1-555-987-6543",
-    date_of_birth: new Date("1945-08-20"),
+    date_of_birth: "1945-08-20",
     gender: "male",
+    address: {
+      street: "123 Main St",
+      city: "Anytown",
+      state: "CA",
+      zipcode: "12345"
+    },
     created_at: new Date("2024-03-01T08:00:00Z"),
     updated_at: new Date("2024-03-01T08:00:00Z")
   }

@@ -1,5 +1,5 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import ScheduleService from '../../services/ScheduleService.ts';
+import MockScheduleService from '../services/MockScheduleService.ts';
 
 export default async function markSchedule(
   event: APIGatewayProxyEventV2
@@ -21,12 +21,12 @@ export default async function markSchedule(
       };
     }
 
-    const scheduleService = new ScheduleService();
-    const schedule = await scheduleService.markScheduleAsTaken(scheduleId);
+    const scheduleService = new MockScheduleService();
+    await scheduleService.markScheduleAsTaken(scheduleId);
   
     return {
       statusCode: 200,
-      body: JSON.stringify(schedule)
+      body: JSON.stringify('Schedule successfully marked as taken')
     };
   } catch (err) {
     return {

@@ -1,22 +1,22 @@
+// @ts-nocheck
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import { Resource } from "sst";
-import { caregiver } from "./db/schema/caregiver.sql";
-import { medication } from "./db/schema/medication.sql";
-import { patient } from "./db/schema/patient.sql";
-import { schedule } from "./db/schema/schedule.sql";
+import { medication } from "./db/schema/medication.sql.ts";
+import { patient } from "./db/schema/patient.sql.ts";
+import { schedule } from "./db/schema/schedule.sql.ts";
 
 const pool = new Pool({
-  host: Resource.MedthrivePostgres.host,
-  port: Resource.MedthrivePostgres.port,
-  user: Resource.MedthrivePostgres.username,
-  password: Resource.MedthrivePostgres.password,
-  database: Resource.MedthrivePostgres.database,
+  host: Resource.MedDatabase.host,
+  port: Resource.MedDatabase.port,
+  user: Resource.MedDatabase.username,
+  password: Resource.MedDatabase.password,
+  database: Resource.MedDatabase.database,
   ssl: {
     rejectUnauthorized: false
   }
 });
 
-const schema = { caregiver, medication, patient, schedule };
+const schema = { medication, patient, schedule };
 
 export const db = drizzle(pool, { schema });

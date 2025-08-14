@@ -1,12 +1,11 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import MedicationService from '../../services/MedicationService.ts';
+import MockScheduleService from '../services/MockScheduleService.ts';
 
-export default async function patchMedications(
+export default async function getSchedulesByMedicationId(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   try {
     const medicationId = event.pathParameters?.medication_id;
-    const eventBody = event.body ? JSON.parse(event.body) : null;
   
     if (!medicationId) {
       return {
@@ -14,7 +13,7 @@ export default async function patchMedications(
         body: "Error: medication_id is required"
       };
     }
-  
+
     if (typeof medicationId !== 'string') {
       return {
         statusCode: 400,
@@ -22,17 +21,17 @@ export default async function patchMedications(
       };
     }
 
-    const medicationService = new MedicationService();
-    const medication = await medicationService.updateMedication(eventBody);
+    const scheduleService = new MockScheduleService();
+    const schedules = await scheduleService.getSchedulesByMedicationId(medicationId);
   
     return {
       statusCode: 200,
-      body: JSON.stringify(medication)
+      body: JSON.stringify(schedules)
     };
   } catch (err) {
     return {
       statusCode: 500,
-      body: err instanceof Error ? err.message : "Error: Failed to update medication"
+      body: err instanceof Error ? err.message : "Error: Failed to get schedules"
     };
   }
 };

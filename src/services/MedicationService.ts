@@ -1,50 +1,40 @@
-import { Medication } from "../types";
-import { medications as mockMedications } from "../__tests__/data/medications.ts"
+import { Medication } from "../types.ts";
 import { v4 as uuidv4 } from 'uuid';
+import { db } from "../drizzle.ts";
+import { medication as medicationSchema } from "../db/schema/medication.sql.ts";
+import { eq } from "drizzle-orm";
 
 export default class MedicationService {
   async getMedicationsByPatientId(patientId: string): Promise<Medication[]> {
-    const medications = mockMedications.filter((medication) => medication.patient_id === patientId);
+    const medications = await db.select().from(medicationSchema).where(eq(medicationSchema.patient_id, patientId));
     return medications;
   }
 
   async getMedicationById(medicationId: string): Promise<Medication> {
-    const medication = mockMedications.find((medication) => medication.id === medicationId);
-
-    if (!medication) {
-      throw new Error('Error: Medication not found');
-    }
-
-    return medication;
+    const medication = await db.select().from(medicationSchema).where(eq(medicationSchema.id, medicationId));
+    return medication[0];
   }
 
-  async createMedication(patientId: string, medicationData: Partial<Medication>): Promise<Medication> {
-    const newMedication: Medication = {
-      id: uuidv4(),
-      patient_id: patientId,
-      name: medicationData.name!,
-      description: medicationData.description || "",
-      quantity: medicationData.quantity!,
-      is_active: medicationData.is_active ?? true,
-      schedule: medicationData.schedule!,
-      created_at: new Date(),
-      updated_at: new Date()
+  async createMedication(medication: Medication): Promise<Medication> {
+    const newMedication: Omit<Medication, 'id' | 'created_at' | 'updated_at'> = {
+      patient_id: medication.patient_id!,
+      name: medication.name!,
+      description: medication.description || "",
+      quantity: medication.quantity!,
+      is_active: medication.is_active ?? true,
+      schedule: medication.schedule!,
     };
 
-    mockMedications.push(newMedication);
+    const [result] = await db.insert(medicationSchema)
+      .values(newMedication)
+      .returning();
 
-    return newMedication;
+    return result;
   }
 
-  async updateMedication(medication: Medication): Promise<Medication> {
-    const updatedMedication = mockMedications.find((medication) => medication.id === medication.id);
+  async updateMedication(medicationData: Partial<Medication>): Promise<string> {
+    await db.update(medicationSchema).set(medicationData).where(eq(medicationSchema.id, medicationData.id!));
 
-    if (!updatedMedication) {
-      throw new Error('Error: Medication not found');
-    }
-
-    Object.assign(updatedMedication, medication);
-
-    return updatedMedication;
+    return 'Medication updated successfully';
   }
 }

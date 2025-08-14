@@ -2,36 +2,37 @@ import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import MedicationService from '../../services/MedicationService.ts';
 import ScheduleService from '../../services/ScheduleService.ts';
 
-export default async function postMedications(
+export default async function createMedication(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   try {
     const eventBody = event.body ? JSON.parse(event.body) : null;
-    const patientId = event.pathParameters?.patient_id;
   
-    if (!patientId) {
+    if (!eventBody) {
       return {
         statusCode: 400,
-        body: "Error: patient_id is required"
+        body: "Error: Invalid request body"
       };
     }
+
+    const { patient_id, name, quantity, is_active, schedule } = eventBody;
   
-    if (patientId && typeof patientId !== 'string') {
+    if (!patient_id || !name || !quantity || !is_active || !schedule) {
       return {
         statusCode: 400,
-        body: "Error: patient_id is not a string"
+        body: "Error: Missing required fields"
       };
     }
 
     const medicationService = new MedicationService();
-    const medication = await medicationService.createMedication(patientId, eventBody);
-
     const scheduleService = new ScheduleService();
+
+    const medication = await medicationService.createMedication(eventBody);
     await scheduleService.createSchedules(medication);
   
     return {
       statusCode: 200,
-      body: JSON.stringify(medication)
+      body: JSON.stringify('Medication created successfully')
     };
   } catch (err) {
     return {

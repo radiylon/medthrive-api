@@ -3,7 +3,7 @@
 export default $config({
   app(input) {
     return {
-      name: "medthrive",
+      name: "medthrive-api",
       removal: input?.stage === "production" ? "retain" : "remove",
       protect: ["production"].includes(input?.stage),
       home: "aws",
@@ -16,8 +16,11 @@ export default $config({
     };
   },
   async run() {
-    const vpc = new sst.aws.Vpc("MedthriveVpc", { bastion: true, nat: "ec2" });
-    const rds = new sst.aws.Postgres("MedthrivePostgres", { vpc });
+    const vpc = new sst.aws.Vpc("MedVpc", { bastion: true });
+    const rds = new sst.aws.Postgres("MedDatabase", { 
+      vpc,
+      version: "16.8",
+    });
 
     new sst.x.DevCommand("Studio", {
       link: [rds],
@@ -26,48 +29,61 @@ export default $config({
       },
     });
 
-    const api = new sst.aws.ApiGatewayV2("MedthriveApi", { 
+    const BASE_APP_URL = $app.stage !== "production" 
+      ? "http://localhost:3000"
+      : "https://diiavvui1t903.cloudfront.net";
+
+    const api = new sst.aws.ApiGatewayV2("MedApi", { 
       vpc, 
       link: [rds],
       cors: {
         allowHeaders: ["*"],
         allowMethods: ["*"],
-        allowOrigins: ["http://localhost:3000", "https://d3iqr4nk3h4ypf.cloudfront.net"]
+        allowOrigins: [BASE_APP_URL]
       }
     });
-
-    api.route("GET /caregivers/{caregiver_id}/patients", {
+    
+    // get-patients
+    api.route("GET /patients", {
       handler: "src/lambdas/get-patients/handler.default"
     });
 
+    // create-patient
+    api.route("POST /patients", {
+      handler: "src/lambdas/create-patient/handler.default"
+    });
+
+    // get-patient-by-id
     api.route("GET /patients/{patient_id}", {
       handler: "src/lambdas/get-patient-by-id/handler.default"
     });
     
+    // get-patient-medications
     api.route("GET /patients/{patient_id}/medications", {
-      handler: "src/lambdas/get-medications/handler.default"
+      handler: "src/lambdas/get-medications-by-patient-id/handler.default"
     });
 
-    api.route("GET /patients/{patient_id}/medications/{medication_id}", {
+    // get-medication-by-id
+    api.route("GET /medications/{medication_id}", {
       handler: "src/lambdas/get-medication-by-id/handler.default"
     });
 
-    api.route("POST /patients/{patient_id}/medications", {
-      handler: "src/lambdas/post-medications/handler.default"
+    // create-medication
+    api.route("POST /medications", {
+      handler: "src/lambdas/create-medication/handler.default"
     });
 
-    api.route("PATCH /patients/{patient_id}/medications/{medication_id}", {
-      handler: "src/lambdas/patch-medications/handler.default"
+    // patch-medication
+    api.route("PATCH /medications", {
+      handler: "src/lambdas/patch-medication/handler.default"
     });
 
+    // get-schedules-by-medication-id
     api.route("GET /medications/{medication_id}/schedules", {
       handler: "src/lambdas/get-schedules-by-medication-id/handler.default"
     });
 
-    api.route("GET /schedules/{schedule_id}", {
-      handler: "src/lambdas/get-schedule-by-id/handler.default"
-    });
-
+    // mark-schedule
     api.route("PATCH /schedules/{schedule_id}/taken", {
       handler: "src/lambdas/mark-schedule/handler.default"
     });

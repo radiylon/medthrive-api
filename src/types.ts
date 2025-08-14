@@ -33,6 +33,12 @@ export interface Patient {
   phone_number: string;
   date_of_birth: string;
   gender: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zipcode: string;
+  }
   created_at: Date;
   updated_at: Date;
 }

@@ -7,7 +7,6 @@ async function reset() {
       DROP TABLE IF EXISTS "schedule" CASCADE;
       DROP TABLE IF EXISTS "medication" CASCADE;
       DROP TABLE IF EXISTS "patient" CASCADE;
-      DROP TABLE IF EXISTS "caregiver" CASCADE;
       DROP TABLE IF EXISTS "__drizzle_migrations" CASCADE;
     `);
 

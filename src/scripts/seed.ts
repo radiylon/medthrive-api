@@ -3,7 +3,6 @@ import { patient as patientSchema } from "../db/schema/patient.sql.ts";
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function seed() {
-  // Create initial patient with the caregiver's ID
   const patientData = {
     first_name: 'Ray',
     last_name: 'Mendez',

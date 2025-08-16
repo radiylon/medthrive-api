@@ -39,9 +39,10 @@ export default async function patchMedication(
       body: JSON.stringify(medication)
     };
   } catch (err) {
+    console.error("Error updating medication", err);
     return {
       statusCode: 500,
-      body: err instanceof Error ? err.message : "Error: Failed to mark schedule as taken"
+      body: err instanceof Error ? err.message : "Error: Failed to update medication"
     };
   }
 };

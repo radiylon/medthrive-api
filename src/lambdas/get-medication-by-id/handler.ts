@@ -29,6 +29,7 @@ export default async function getMedicationById(
       body: JSON.stringify(medication)
     };
   } catch (err) {
+    console.error("Error fetching medication by ID", err);
     return {
       statusCode: 500,
       body: err instanceof Error ? err.message : "Error: Failed to fetch medication"

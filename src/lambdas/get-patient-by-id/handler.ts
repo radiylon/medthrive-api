@@ -27,6 +27,7 @@ export default async function getPatientById(event: APIGatewayProxyEventV2): Pro
       body: JSON.stringify(patient)
     };
   } catch (err) {
+    console.error("Error fetching patient by ID", err);
     return {
       statusCode: 500,
       body: err instanceof Error ? err.message : "Error: Failed to fetch patient"

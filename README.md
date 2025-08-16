@@ -33,6 +33,7 @@ This project utilizes AWS via sst.dev. In order to properly run the application,
 3. Follow the [SST AWS setup instructions](https://sst.dev/docs/aws-accounts/)
 4. Replace the profiles in `sst.config.ts` with your own account profiles
 5. Run `npm run dev` to start local development
+6. In a separate terminal window, navigate to the project and run `npm run db:push` to initialize tables locally
 
 ## Testing
 

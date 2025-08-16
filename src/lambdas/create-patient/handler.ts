@@ -29,6 +29,7 @@ export default async function createPatient(
       body: JSON.stringify(patient)
     };
   } catch (err) {
+    console.error("Error creating patient", err);
     return {
       statusCode: 500,
       body: err instanceof Error ? err.message : "Error: Failed to create patient"

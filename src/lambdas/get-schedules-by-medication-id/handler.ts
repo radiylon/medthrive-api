@@ -22,6 +22,7 @@ export default async function getSchedulesByMedicationId(
       body: JSON.stringify(schedules)
     };
   } catch (err) {
+    console.error("Error fetching schedules by medication ID", err);
     return {
       statusCode: 500,
       body: err instanceof Error ? err.message : "Error: Failed to get schedules"

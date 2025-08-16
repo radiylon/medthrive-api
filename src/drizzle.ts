@@ -12,7 +12,7 @@ const pool = new Pool({
   user: Resource.MedDatabase.username,
   password: Resource.MedDatabase.password,
   database: Resource.MedDatabase.database,
-  ssl: {
+  ssl: { 
     rejectUnauthorized: false
   }
 });

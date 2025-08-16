@@ -16,10 +16,11 @@ export default $config({
     };
   },
   async run() {
-    const vpc = new sst.aws.Vpc("MedVpc", { bastion: true });
+    const vpc = new sst.aws.Vpc("MedVpc", { bastion: true, nat: "ec2" });
     const rds = new sst.aws.Postgres("MedDatabase", { 
       vpc,
       version: "16.8",
+      proxy: true,
     });
 
     new sst.x.DevCommand("Studio", {
@@ -31,7 +32,8 @@ export default $config({
 
     const BASE_APP_URL = $app.stage !== "production" 
       ? "http://localhost:3000"
-      : "https://diiavvui1t903.cloudfront.net";
+      : "https://d3aozqk9inqzy1.cloudfront.net";
+      
 
     const api = new sst.aws.ApiGatewayV2("MedApi", { 
       vpc, 
@@ -88,6 +90,16 @@ export default $config({
       handler: "src/lambdas/mark-schedule/handler.default"
     });
 
-    return { api: api.url };
+    // migrate-database
+    api.route("POST /migrate-database", {
+      handler: "src/lambdas/migrate-database/handler.default"
+    });
+
+    // test-connection
+    api.route("GET /test-connection", {
+      handler: "src/lambdas/test-connection/handler.default"
+    });
+
+    return { api: api.url, host: rds.host, port: rds.port, user: rds.username, password: rds.password, database: rds.database };
   },
 });

@@ -35,6 +35,7 @@ export default async function createMedication(
       body: JSON.stringify('Medication created successfully')
     };
   } catch (err) {
+    console.error("Error creating medication", err);
     return {
       statusCode: 500,
       body: err instanceof Error ? err.message : "Error: Failed to create medication"

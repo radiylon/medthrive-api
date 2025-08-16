@@ -12,7 +12,7 @@ export default class ScheduleService {
       .orderBy(
         asc(scheduleSchema.scheduled_date),
         asc(scheduleSchema.taken_at)
-      );
+      ).execute();
     return schedules;
   }
 
@@ -48,7 +48,7 @@ export default class ScheduleService {
           patient_id: patientId,
           scheduled_date: currentScheduleDate,
           taken_at: null
-        });
+        }).execute();
 
         // Increment our pill counter
         totalPillsScheduled++;
@@ -69,7 +69,7 @@ export default class ScheduleService {
     const schedule = await db.update(scheduleSchema).set({ 
       taken_at: new Date(),
       updated_at: new Date()
-    }).where(eq(scheduleSchema.id, scheduleId));
+    }).where(eq(scheduleSchema.id, scheduleId)).execute();
 
     if (!schedule) {
       throw new Error('Error: Schedule not found');

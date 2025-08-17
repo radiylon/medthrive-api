@@ -23,6 +23,25 @@ export default $config({
       proxy: true,
     });
 
+    const migrator = new sst.aws.Function("DatabaseMigrator", {
+      handler: "src/lambdas/migrate-database/handler.default",
+      link: [rds],
+      vpc,
+      copyFiles: [
+        {
+          from: "src/db/migrations",
+          to: "./src/db/migrations",
+        },
+      ],
+    });
+    
+    if (!$dev){
+      new aws.lambda.Invocation("DatabaseMigratorInvocation", {
+        input: Date.now().toString(),
+        functionName: migrator.name,
+      });
+    }
+
     new sst.x.DevCommand("Studio", {
       link: [rds],
       dev: {

@@ -47,57 +47,79 @@ export default $config({
     
     // get-patients
     api.route("GET /patients", {
-      handler: "src/lambdas/get-patients/handler.default"
+      handler: "src/lambdas/get-patients/handler.default",
+      vpc,
+      link: [rds],
     });
 
     // create-patient
     api.route("POST /patients", {
-      handler: "src/lambdas/create-patient/handler.default"
+      handler: "src/lambdas/create-patient/handler.default",
+      vpc,
+      link: [rds],
     });
 
     // get-patient-by-id
     api.route("GET /patients/{patient_id}", {
-      handler: "src/lambdas/get-patient-by-id/handler.default"
+      handler: "src/lambdas/get-patient-by-id/handler.default",
+      vpc,
+      link: [rds],
     });
     
     // get-patient-medications
     api.route("GET /patients/{patient_id}/medications", {
-      handler: "src/lambdas/get-medications-by-patient-id/handler.default"
+      handler: "src/lambdas/get-medications-by-patient-id/handler.default",
+      vpc,
+      link: [rds],
     });
 
     // get-medication-by-id
     api.route("GET /medications/{medication_id}", {
-      handler: "src/lambdas/get-medication-by-id/handler.default"
+      handler: "src/lambdas/get-medication-by-id/handler.default",
+      vpc,
+      link: [rds],
     });
 
     // create-medication
     api.route("POST /medications", {
-      handler: "src/lambdas/create-medication/handler.default"
+      handler: "src/lambdas/create-medication/handler.default",
+      vpc,
+      link: [rds],
     });
 
     // patch-medication
     api.route("PATCH /medications", {
-      handler: "src/lambdas/patch-medication/handler.default"
+      handler: "src/lambdas/patch-medication/handler.default",
+      vpc,
+      link: [rds],
     });
 
     // get-schedules-by-medication-id
     api.route("GET /medications/{medication_id}/schedules", {
-      handler: "src/lambdas/get-schedules-by-medication-id/handler.default"
+      handler: "src/lambdas/get-schedules-by-medication-id/handler.default",
+      vpc,
+      link: [rds],
     });
 
     // mark-schedule
     api.route("PATCH /schedules/{schedule_id}/taken", {
-      handler: "src/lambdas/mark-schedule/handler.default"
+      handler: "src/lambdas/mark-schedule/handler.default",
+      vpc,
+      link: [rds],
     });
 
     // migrate-database
     api.route("POST /migrate-database", {
-      handler: "src/lambdas/migrate-database/handler.default"
+      handler: "src/lambdas/migrate-database/handler.default",
+      vpc,
+      link: [rds],
     });
 
     // test-connection
     api.route("GET /test-connection", {
-      handler: "src/lambdas/test-connection/handler.default"
+      handler: "src/lambdas/test-connection/handler.default",
+      vpc,
+      link: [rds],
     });
 
     return { api: api.url, host: rds.host, port: rds.port, user: rds.username, password: rds.password, database: rds.database };

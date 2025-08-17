@@ -3,7 +3,7 @@ import PatientService from "../../services/PatientService.ts";
 
 export default async function testConnection(event: any) {
   try {
-    console.log("🔍 Testing connection setup...");
+    console.log("Testing connection setup...");
     
     const host = Resource.MedDatabase.host;
     const database = Resource.MedDatabase.database;
@@ -11,7 +11,7 @@ export default async function testConnection(event: any) {
     const patientService = new PatientService();
     const patients = await patientService.getPatients();
 
-    console.log("🔍 Patients fetched", patients);
+    console.log("Patients fetched", patients);
     
     return {
       statusCode: 200,

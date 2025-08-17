@@ -1,6 +1,6 @@
 # medthrive-api
 
-MEDTHRIVE is an example medication management app for caregivers.  I built this to learn more about IaC using a framework like SST.  This is the API powering the MVP.
+MEDTHRIVE is an example medication management app for caregivers.  I built this to learn more about IaC using a framework like SST.  This is the API powering the MVP.  For the UI repo, please see [medthrive-ui](https://github.com/radiylon/medthrive-ui).
 
 Built using TypeScript, AWS API Gateway, AWS Lambda, and Amazon RDS via SST.
 
@@ -34,8 +34,9 @@ This project utilizes AWS via sst.dev. In order to properly run the application,
 2. Install and configure the AWS CLI
 3. Follow the [SST AWS setup instructions](https://sst.dev/docs/aws-accounts/)
 4. Replace the profiles in `sst.config.ts` with your own account profiles
-5. Run `npm run dev` to start local development
-6. In a separate terminal window, navigate to the project and run `npm run db:push` to initialize tables locally
+5. Replace `devFrontendURL` in `sst.config.ts` with your local URL for medthrive-ui
+6. Run `npm run dev` to start local development
+7. In a separate terminal window, navigate to the project and run `npm run db:push` to initialize tables locally
 
 ## Testing
 

@@ -30,10 +30,8 @@ export default $config({
       },
     });
 
-    const BASE_APP_URL = $app.stage !== "production" 
-      ? "http://localhost:3000"
-      : "https://d3aozqk9inqzy1.cloudfront.net";
-      
+    const devFrontendURL = "http://localhost:3000";
+    const prodFrontendURL = "https://d3aozqk9inqzy1.cloudfront.net";
 
     const api = new sst.aws.ApiGatewayV2("MedApi", { 
       vpc, 
@@ -41,7 +39,7 @@ export default $config({
       cors: {
         allowHeaders: ["*"],
         allowMethods: ["*"],
-        allowOrigins: [BASE_APP_URL]
+        allowOrigins: [$app.stage !== "production" ? devFrontendURL : prodFrontendURL]
       }
     });
     

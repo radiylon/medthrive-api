@@ -5,6 +5,10 @@
 
 declare module "sst" {
   export interface Resource {
+    "DatabaseMigrator": {
+      "name": string
+      "type": "sst.aws.Function"
+    }
     "MedApi": {
       "type": "sst.aws.ApiGatewayV2"
       "url": string

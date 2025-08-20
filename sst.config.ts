@@ -4,8 +4,9 @@ export default $config({
   app(input) {
     return {
       name: "medthrive-api",
-      removal: input?.stage === "production" ? "retain" : "remove",
-      protect: ["production"].includes(input?.stage),
+      // removal: input?.stage === "production" ? "retain" : "remove",
+      // protect: ["production"].includes(input?.stage),
+      removal: "remove",
       home: "aws",
       providers: {
         aws: {
@@ -49,8 +50,7 @@ export default $config({
       },
     });
 
-    const devFrontendURL = "http://localhost:3000";
-    const prodFrontendURL = "https://d3aozqk9inqzy1.cloudfront.net";
+    const MEDTHRIVE_UI_URL = process.env.MEDTHRIVE_UI_URL || "";
 
     const api = new sst.aws.ApiGatewayV2("MedApi", { 
       vpc, 
@@ -58,7 +58,7 @@ export default $config({
       cors: {
         allowHeaders: ["*"],
         allowMethods: ["*"],
-        allowOrigins: [$app.stage !== "production" ? devFrontendURL : prodFrontendURL]
+        allowOrigins: [MEDTHRIVE_UI_URL]
       }
     });
     

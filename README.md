@@ -34,7 +34,8 @@ This project utilizes AWS via sst.dev. In order to properly run the application,
 2. Install and configure the AWS CLI
 3. Follow the [SST AWS setup instructions](https://sst.dev/docs/aws-accounts/)
 4. Replace the profiles in `sst.config.ts` with your own account profiles
-5. Replace `devFrontendURL` in `sst.config.ts` with your local URL for medthrive-ui
+5. Create a `.env` file at the root and set `MEDTHRIVE_UI_URL`
+  - You will need to have `medthrive-ui` running locally
 6. Run `npm run dev` to start local development
 7. In a separate terminal window, navigate to the project and run `npm run db:push` to initialize tables locally
 

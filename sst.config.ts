@@ -9,7 +9,7 @@ export default $config({
       home: "aws",
       providers: {
         aws: {
-          profile: input?.stage === "production" ? "radiylon-production" : "radiylon-dev",
+          profile: input?.stage === "production" ? "radiylon-production" : "radiylon-develop",
           region: "us-west-1",
         },
       },

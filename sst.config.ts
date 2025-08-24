@@ -15,6 +15,15 @@ export default $config({
       },
     };
   },
+  console: {
+    autodeploy: {
+      target(event) {
+        if (event.type === "branch" && event.branch === "main" && event.action === "pushed") {
+          return { stage: "production" };
+        }
+      }
+    }
+  },
   async run() {
     const vpc = new sst.aws.Vpc("MedVpc", { bastion: true, nat: "ec2" });
     const rds = new sst.aws.Postgres("MedDatabase", { 

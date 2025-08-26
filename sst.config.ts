@@ -32,25 +32,6 @@ export default $config({
       proxy: true,
     });
 
-    const migrator = new sst.aws.Function("DatabaseMigrator", {
-      handler: "src/lambdas/migrate-database/handler.default",
-      link: [rds],
-      vpc,
-      copyFiles: [
-        {
-          from: "src/db/migrations",
-          to: "./src/db/migrations",
-        },
-      ],
-    });
-    
-    if (!$dev){
-      new aws.lambda.Invocation("DatabaseMigratorInvocation", {
-        input: Date.now().toString(),
-        functionName: migrator.name,
-      });
-    }
-
     new sst.x.DevCommand("Studio", {
       link: [rds],
       dev: {
@@ -129,20 +110,6 @@ export default $config({
     // mark-schedule
     api.route("PATCH /schedules/{schedule_id}/taken", {
       handler: "src/lambdas/mark-schedule/handler.default",
-      vpc,
-      link: [rds],
-    });
-
-    // migrate-database
-    api.route("POST /migrate-database", {
-      handler: "src/lambdas/migrate-database/handler.default",
-      vpc,
-      link: [rds],
-    });
-
-    // test-connection
-    api.route("GET /test-connection", {
-      handler: "src/lambdas/test-connection/handler.default",
       vpc,
       link: [rds],
     });

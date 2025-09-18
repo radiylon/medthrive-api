@@ -17,6 +17,13 @@ export default $config({
   },
   console: {
     autodeploy: {
+      async workflow({ $, event }) {
+        await $`npm i`;
+        await $`npm run db:push`;
+        event.action === "removed"
+          ? await $`npm sst remove`
+          : await $`npm sst deploy`;
+      },
       target(event) {
         if (event.type === "branch" && event.branch === "main" && event.action === "pushed") {
           return { stage: "production" };

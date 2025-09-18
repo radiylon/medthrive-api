@@ -5,6 +5,22 @@
 
 declare module "sst" {
   export interface Resource {
+    "MedApi": {
+      "type": "sst.aws.ApiGatewayV2"
+      "url": string
+    }
+    "MedDatabase": {
+      "database": string
+      "host": string
+      "password": string
+      "port": number
+      "type": "sst.aws.Postgres"
+      "username": string
+    }
+    "MedVpc": {
+      "bastion": string
+      "type": "sst.aws.Vpc"
+    }
   }
 }
 /// <reference path="sst-env.d.ts" />

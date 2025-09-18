@@ -29,7 +29,6 @@ export default $config({
     const rds = new sst.aws.Postgres("MedDatabase", { 
       vpc,
       version: "16.8",
-      proxy: true,
     });
 
     new sst.x.DevCommand("Studio", {

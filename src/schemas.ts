@@ -1,6 +1,5 @@
 import * as z from 'zod';
 
-// Infer TypeScript types from Zod schemas
 export type CreateMedicationInput = z.infer<typeof createMedicationSchema>;
 export type CreatePatientInput = z.infer<typeof createPatientSchema>;
 export type PatchMedicationInput = z.infer<typeof patchMedicationSchema>;

@@ -18,9 +18,7 @@ export default async function getMedicationsByPatientId(
       };
     }
   
-    const { patient_id: patientId } = validationResult.data;
-  
-    const medications = await medicationService.getMedicationsByPatientId(patientId);
+    const medications = await medicationService.getMedicationsByPatientId(validationResult.data.patient_id);
   
     return {
       statusCode: 200,

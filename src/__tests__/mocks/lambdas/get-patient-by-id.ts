@@ -14,10 +14,8 @@ export default async function getPatientById(event: APIGatewayProxyEventV2): Pro
       };
     }
 
-    const { patient_id: patientId } = validationResult.data;
-
     const patientService = new MockPatientService();
-    const patient = await patientService.getPatientById(patientId);
+    const patient = await patientService.getPatientById(validationResult.data.patient_id);
 
     return {
       statusCode: 200,

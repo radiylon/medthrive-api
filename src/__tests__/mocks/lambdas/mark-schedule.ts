@@ -16,10 +16,8 @@ export default async function markSchedule(
       };
     }
 
-    const { schedule_id: scheduleId } = validationResult.data;
-
     const scheduleService = new MockScheduleService();
-    await scheduleService.markScheduleAsTaken(scheduleId);
+    await scheduleService.markScheduleAsTaken(validationResult.data.schedule_id);
   
     return {
       statusCode: 200,

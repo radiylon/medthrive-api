@@ -16,10 +16,8 @@ export default async function getSchedulesByMedicationId(
       };
     }
 
-    const { medication_id: medicationId } = validationResult.data;
-
     const scheduleService = new MockScheduleService();
-    const schedules = await scheduleService.getSchedulesByMedicationId(medicationId);
+    const schedules = await scheduleService.getSchedulesByMedicationId(validationResult.data.medication_id);
   
     return {
       statusCode: 200,

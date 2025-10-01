@@ -21,17 +21,8 @@ export default class MedicationService {
   }
 
   async createMedication(medication: CreateMedicationInput): Promise<Medication> {
-    const newMedication = {
-      patient_id: medication.patient_id,
-      name: medication.name,
-      description: medication.description || "",
-      quantity: medication.quantity,
-      is_active: medication.is_active,
-      schedule: medication.schedule,
-    };
-
     const [result] = await db.insert(medicationSchema)
-      .values(newMedication)
+      .values(medication)
       .returning();
 
     return result;

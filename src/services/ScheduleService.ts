@@ -21,6 +21,9 @@ export default class ScheduleService {
 
     const startDate = new Date(start_date);
     
+    // Build array of all schedules to insert
+    const schedulesToInsert = [];
+    
     // Track how many pills we've scheduled
     let totalPillsScheduled = 0;
     
@@ -41,8 +44,8 @@ export default class ScheduleService {
       // ex. if frequency is 2, create 2 schedules for the same date
       for (let pillsForThisDate = 0; pillsForThisDate < frequency && totalPillsScheduled < quantity; pillsForThisDate++) {
         
-        // Create a schedule record for this pill
-        await db.insert(scheduleSchema).values({
+        // Add schedule to batch insert array
+        schedulesToInsert.push({
           medication_id: medicationId,
           patient_id: patientId,
           scheduled_date: currentScheduleDate,
@@ -60,6 +63,9 @@ export default class ScheduleService {
         dayOffset += 7;  // Move to next week
       }
     }
+    
+    // Batch insert all schedules at once
+    await db.insert(scheduleSchema).values(schedulesToInsert);
     
     return 'Schedules created successfully';
   }

@@ -10,13 +10,13 @@ export default class PatientService {
       id: patientSchema.id,
       first_name: patientSchema.first_name,
       last_name: patientSchema.last_name,
-    }).from(patientSchema).execute();
+    }).from(patientSchema);
 
     return patients;
   }
 
   async getPatientById(patientId: string): Promise<Patient> {
-    const patient = await db.select().from(patientSchema).where(eq(patientSchema.id, patientId)).execute();
+    const patient = await db.select().from(patientSchema).where(eq(patientSchema.id, patientId));
 
     if (!patient || patient.length === 0) {
       throw new Error('Error: Patient not found');
@@ -26,7 +26,7 @@ export default class PatientService {
   }
 
   async createPatient(patient: CreatePatientInput): Promise<string> {
-    await db.insert(patientSchema).values(patient).execute();
+    await db.insert(patientSchema).values(patient);
     
     return 'Patient created successfully';
   }

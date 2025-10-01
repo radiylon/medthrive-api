@@ -6,12 +6,12 @@ import { eq } from "drizzle-orm";
 
 export default class MedicationService {
   async getMedicationsByPatientId(patientId: string): Promise<Medication[]> {
-    const medications = await db.select().from(medicationSchema).where(eq(medicationSchema.patient_id, patientId)).execute();
+    const medications = await db.select().from(medicationSchema).where(eq(medicationSchema.patient_id, patientId));
     return medications;
   }
 
   async getMedicationById(medicationId: string): Promise<Medication> {
-    const medication = await db.select().from(medicationSchema).where(eq(medicationSchema.id, medicationId)).execute();
+    const medication = await db.select().from(medicationSchema).where(eq(medicationSchema.id, medicationId));
     return medication[0];
   }
 
@@ -27,14 +27,13 @@ export default class MedicationService {
 
     const [result] = await db.insert(medicationSchema)
       .values(newMedication)
-      .returning()
-      .execute();
+      .returning();
 
     return result;
   }
 
   async updateMedication(medicationData: PatchMedicationInput): Promise<string> {
-    await db.update(medicationSchema).set(medicationData).where(eq(medicationSchema.id, medicationData.id)).execute();
+    await db.update(medicationSchema).set(medicationData).where(eq(medicationSchema.id, medicationData.id));
 
     return 'Medication updated successfully';
   }

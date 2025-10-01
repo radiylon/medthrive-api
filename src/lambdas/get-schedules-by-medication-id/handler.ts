@@ -12,6 +12,7 @@ export default async function getSchedulesByMedicationId(
     const validationResult = getSchedulesByMedicationIdSchema.safeParse(event.pathParameters);
     
     if (!validationResult.success) {
+      console.error("Error: Validation failed for get schedules by medication ID ", validationResult.error);
       return {
         statusCode: 400,
         body: getValidationErrorMessage(validationResult)

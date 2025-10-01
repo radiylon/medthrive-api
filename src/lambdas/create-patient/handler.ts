@@ -12,6 +12,7 @@ export default async function createPatient(
     const eventBody = event.body ? JSON.parse(event.body) : null;
     
     if (!eventBody) {
+      console.error("Error: Invalid request body");
       return {
         statusCode: 400,
         body: "Error: Invalid request body"
@@ -21,6 +22,7 @@ export default async function createPatient(
     const validationResult = createPatientSchema.safeParse(eventBody);
     
     if (!validationResult.success) {
+      console.error("Error: Validation failed for create patient ", validationResult.error);
       return {
         statusCode: 400,
         body: getValidationErrorMessage(validationResult, "Error: Missing required fields")

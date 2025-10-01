@@ -14,6 +14,7 @@ export default async function createMedication(
     const eventBody = event.body ? JSON.parse(event.body) : null;
     
     if (!eventBody) {
+      console.error("Error: Invalid request body");
       return {
         statusCode: 400,
         body: "Error: Invalid request body"
@@ -23,6 +24,7 @@ export default async function createMedication(
     const validationResult = createMedicationSchema.safeParse(eventBody);
     
     if (!validationResult.success) {
+      console.error("Error: Validation failed for create medication ", validationResult.error);
       return {
         statusCode: 400,
         body: getValidationErrorMessage(validationResult, "Error: Missing required fields")

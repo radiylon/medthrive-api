@@ -10,6 +10,7 @@ export default async function getPatientById(event: APIGatewayProxyEventV2): Pro
     const validationResult = getPatientByIdSchema.safeParse(event.pathParameters);
     
     if (!validationResult.success) {
+      console.error("Error: Validation failed for get patient by ID ", validationResult.error);
       return {
         statusCode: 400,
         body: getValidationErrorMessage(validationResult)

@@ -14,6 +14,7 @@ export default async function patchMedication(
     const validationResult = patchMedicationSchema.safeParse(eventBody);
     
     if (!validationResult.success) {
+      console.error("Error: Validation failed for patch medication ", validationResult.error);
       return {
         statusCode: 400,
         body: getValidationErrorMessage(validationResult, "Error: Invalid request body")

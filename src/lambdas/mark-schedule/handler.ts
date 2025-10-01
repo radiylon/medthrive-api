@@ -12,6 +12,7 @@ export default async function markSchedule(
     const validationResult = markScheduleSchema.safeParse(event.pathParameters);
     
     if (!validationResult.success) {
+      console.error("Error: Validation failed for mark schedule ", validationResult.error);
       return {
         statusCode: 400,
         body: getValidationErrorMessage(validationResult)

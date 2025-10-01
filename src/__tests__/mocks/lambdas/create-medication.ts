@@ -34,7 +34,7 @@ export default async function createMedication(
   
     return {
       statusCode: 200,
-      body: JSON.stringify(medication)
+      body: JSON.stringify('Medication created successfully')
     };
   } catch (err) {
     return {

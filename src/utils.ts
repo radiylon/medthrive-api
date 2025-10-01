@@ -6,6 +6,6 @@ import * as z from 'zod';
  * @param defaultErrorMessage Optional fallback message if no specific error found
  * @returns The error message string
  */
-export function getValidationErrorMessage(validationResult: z.SafeParseError<any>, defaultErrorMessage: string = "Error: Invalid parameters"): string {
-  return validationResult.error.issues[0]?.message || defaultErrorMessage;
+export function getValidationErrorMessage(validationResult: z.SafeParseError<any>, defaultErrorMessage?: string): string {
+  return validationResult.error.issues[0]?.message || defaultErrorMessage || "Error: Invalid parameters";
 }

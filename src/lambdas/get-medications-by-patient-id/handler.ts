@@ -3,6 +3,8 @@ import MedicationService from '../../services/MedicationService.ts';
 import { getMedicationsByPatientIdSchema } from '../../schemas.ts';
 import { getValidationErrorMessage } from '../../utils.ts';
 
+const medicationService = new MedicationService();
+
 export default async function getMedicationsByPatientId(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
@@ -18,7 +20,6 @@ export default async function getMedicationsByPatientId(
   
     const { patient_id: patientId } = validationResult.data;
   
-    const medicationService = new MedicationService();
     const medications = await medicationService.getMedicationsByPatientId(patientId);
   
     return {

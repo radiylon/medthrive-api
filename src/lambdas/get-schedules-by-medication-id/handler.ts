@@ -3,6 +3,8 @@ import ScheduleService from '../../services/ScheduleService.ts';
 import { getSchedulesByMedicationIdSchema } from '../../schemas.ts';
 import { getValidationErrorMessage } from '../../utils.ts';
 
+const scheduleService = new ScheduleService();
+
 export default async function getSchedulesByMedicationId(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
@@ -15,10 +17,9 @@ export default async function getSchedulesByMedicationId(
         body: getValidationErrorMessage(validationResult)
       };
     }
-
+  
     const { medication_id: medicationId } = validationResult.data;
-
-    const scheduleService = new ScheduleService();
+  
     const schedules = await scheduleService.getSchedulesByMedicationId(medicationId);
   
     return {

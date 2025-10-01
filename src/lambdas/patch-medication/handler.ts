@@ -3,6 +3,8 @@ import MedicationService from '../../services/MedicationService.ts';
 import { patchMedicationSchema } from '../../schemas.ts';
 import { getValidationErrorMessage } from '../../utils.ts';
 
+const medicationService = new MedicationService();
+
 export default async function patchMedication(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
@@ -18,7 +20,6 @@ export default async function patchMedication(
       };
     }
 
-    const medicationService = new MedicationService();
     const medication = await medicationService.updateMedication(validationResult.data);
   
     return {

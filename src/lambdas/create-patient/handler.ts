@@ -3,6 +3,8 @@ import PatientService from '../../services/PatientService.ts';
 import { createPatientSchema } from '../../schemas.ts';
 import { getValidationErrorMessage } from '../../utils.ts';
 
+const patientService = new PatientService();
+
 export default async function createPatient(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
@@ -25,7 +27,6 @@ export default async function createPatient(
       };
     }
 
-    const patientService = new PatientService();
     const patient = await patientService.createPatient(validationResult.data);
   
     return {

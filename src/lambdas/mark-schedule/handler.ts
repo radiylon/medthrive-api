@@ -3,6 +3,8 @@ import ScheduleService from '../../services/ScheduleService.ts';
 import { markScheduleSchema } from '../../schemas.ts';
 import { getValidationErrorMessage } from '../../utils.ts';
 
+const scheduleService = new ScheduleService();
+
 export default async function markSchedule(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
@@ -18,7 +20,6 @@ export default async function markSchedule(
 
     const { schedule_id: scheduleId } = validationResult.data;
 
-    const scheduleService = new ScheduleService();
     const schedule = await scheduleService.markScheduleAsTaken(scheduleId);
   
     return {

@@ -3,6 +3,8 @@ import PatientService from '../../services/PatientService.ts';
 import { getPatientByIdSchema } from '../../schemas.ts';
 import { getValidationErrorMessage } from '../../utils.ts';
 
+const patientService = new PatientService();
+
 export default async function getPatientById(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
   try {
     const validationResult = getPatientByIdSchema.safeParse(event.pathParameters);
@@ -16,7 +18,6 @@ export default async function getPatientById(event: APIGatewayProxyEventV2): Pro
 
     const { patient_id: patientId } = validationResult.data;
 
-    const patientService = new PatientService();
     const patient = await patientService.getPatientById(patientId);
 
     return {

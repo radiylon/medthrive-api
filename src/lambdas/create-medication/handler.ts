@@ -1,33 +1,35 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import MedicationService from '../../services/MedicationService.ts';
 import ScheduleService from '../../services/ScheduleService.ts';
+import { createMedicationSchema } from '../../schemas.ts';
+import { getValidationErrorMessage } from '../../utils.ts';
+
+const medicationService = new MedicationService();
+const scheduleService = new ScheduleService();
 
 export default async function createMedication(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   try {
     const eventBody = event.body ? JSON.parse(event.body) : null;
-  
+    
     if (!eventBody) {
       return {
         statusCode: 400,
         body: "Error: Invalid request body"
       };
     }
-
-    const { patient_id, name, quantity, is_active, schedule } = eventBody;
-  
-    if (!patient_id || !name || !quantity || !is_active || !schedule) {
+    
+    const validationResult = createMedicationSchema.safeParse(eventBody);
+    
+    if (!validationResult.success) {
       return {
         statusCode: 400,
-        body: "Error: Missing required fields"
+        body: getValidationErrorMessage(validationResult, "Error: Missing required fields")
       };
     }
 
-    const medicationService = new MedicationService();
-    const scheduleService = new ScheduleService();
-
-    const medication = await medicationService.createMedication(eventBody);
+    const medication = await medicationService.createMedication(validationResult.data);
     await scheduleService.createSchedules(medication);
   
     return {

@@ -1,12 +1,12 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import PatientService from '../../services/PatientService.ts';
 
+const patientService = new PatientService();
+
 export default async function getPatients(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> {
   try {
     console.log("Start getPatients request");
     
-    const patientService = new PatientService();
-    console.log("Patient service created");
     const patients = await patientService.getPatients();
     console.log("Patients fetched", patients);
 

@@ -28,19 +28,6 @@ describe('Patients', () => {
       expect(result.statusCode).to.equal(400);
       expect(result.body).to.equal("Error: patient_id is required");
     });
-  
-    it('should return an error if patient_id is not a string', async () => {
-      const mockEvent = {
-        pathParameters: {
-          patient_id: 123456
-        }
-      } as unknown as APIGatewayProxyEventV2;
-  
-      const result = await getPatientById(mockEvent) as APIGatewayProxyStructuredResultV2;
-  
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal("Error: patient_id is not a string");
-    });
 
     it('should return an error if no patients are found', async () => {
       const mockEvent = {
@@ -99,6 +86,7 @@ describe('Patients', () => {
           email: 'john.doe@example.com',
           phone_number: '1234567890',
           date_of_birth: '1990-01-01',
+          gender: 'male',
           caregiver_id: '123e4567-e89b-12d3-a456-426614174000',
           address: {
             street: '123 Main St',

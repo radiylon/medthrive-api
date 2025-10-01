@@ -9,7 +9,7 @@ export interface Medication {
     frequency: number;
     type: "daily" | "weekly";
     start_date: Date;
-  }
+  };
   created_at: Date;
   updated_at: Date;
 }
@@ -38,7 +38,7 @@ export interface Patient {
     city: string;
     state: string;
     zipcode: string;
-  }
+  };
   created_at: Date;
   updated_at: Date;
 }

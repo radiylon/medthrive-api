@@ -1,38 +1,26 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import MedicationService from '../../services/MedicationService.ts';
+import { patchMedicationSchema } from '../../schemas.ts';
+import { getValidationErrorMessage } from '../../utils.ts';
+
+const medicationService = new MedicationService();
 
 export default async function patchMedication(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   try {
-    
     const eventBody = event.body ? JSON.parse(event.body) : null;
     
-    if (!eventBody) {
+    const validationResult = patchMedicationSchema.safeParse(eventBody);
+    
+    if (!validationResult.success) {
       return {
         statusCode: 400,
-        body: "Error: Invalid request body"
+        body: getValidationErrorMessage(validationResult, "Error: Invalid request body")
       };
     }
 
-    const medicationId = eventBody?.id;
-
-    if (!medicationId) {
-      return {
-        statusCode: 400,
-        body: "Error: id is required"
-      };
-    }
-
-    if (typeof medicationId !== 'string') {
-      return {
-        statusCode: 400,
-        body: "Error: id is not a string"
-      };
-    }
-
-    const medicationService = new MedicationService();
-    const medication = await medicationService.updateMedication(eventBody);
+    const medication = await medicationService.updateMedication(validationResult.data);
   
     return {
       statusCode: 200,

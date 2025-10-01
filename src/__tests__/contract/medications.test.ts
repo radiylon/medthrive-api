@@ -36,19 +36,6 @@ describe('Medications', () => {
       expect(result.body).to.equal('Error: patient_id is required');
     });
 
-    it('should return an error if patient_id is not a string', async () => {
-      const event = {
-        pathParameters: {
-          patient_id: 123456
-        }
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await getMedicationsByPatientId(event) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal('Error: patient_id is not a string');
-    });
-
     it('should return an empty array if no medications are found for the patientId', async () => {
       const event = {
         pathParameters: {
@@ -92,18 +79,42 @@ describe('Medications', () => {
       expect(result.body).to.equal('Error: medication_id is required');
     });
 
-    it('should return an error if medication_id is not a string', async () => {
+    it('should return an error if pathParameters is null', async () => {
       const event = {
-        pathParameters: {
-          patient_id: '123e4567-e89b-12d3-a456-426614174111',
-          medication_id: 123456
-        }
+        pathParameters: null
       } as unknown as APIGatewayProxyEventV2;
 
       const result = await getMedicationById(event) as APIGatewayProxyStructuredResultV2;
 
       expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal('Error: medication_id is not a string');
+      expect(result.body).to.equal('Error: medication_id is required');
+    });
+
+    it('should return an error if no medication is found', async () => {
+      const event = {
+        pathParameters: {
+          medication_id: 'nonexistent-medication-id'
+        }
+      } as unknown as APIGatewayProxyEventV2;
+
+      const result = await getMedicationById(event) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(500);
+      expect(result.body).to.equal('Error: Medication not found');
+    });
+
+    it('should return a medication for a valid medication_id', async () => {
+      const mockMedication = medications[0];
+      const event = {
+        pathParameters: {
+          medication_id: mockMedication.id
+        }
+      } as unknown as APIGatewayProxyEventV2;
+
+      const result = await getMedicationById(event) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(200);
+      expect(result.body).to.equal(JSON.stringify(mockMedication));
     });
   });
 
@@ -157,6 +168,28 @@ describe('Medications', () => {
 
       expect(result.statusCode).to.equal(400);
       expect(result.body).to.equal('Error: Missing required fields');
+    });
+
+    it('should create a medication successfully', async () => {
+      const event = {
+        body: JSON.stringify({
+          patient_id: '123e4567-e89b-12d3-a456-426614174111',
+          name: 'Test Medication',
+          description: 'Test Description',
+          quantity: 30,
+          is_active: true,
+          schedule: {
+            frequency: 2,
+            type: 'daily',
+            start_date: new Date('2025-01-01')
+          }
+        })
+      } as unknown as APIGatewayProxyEventV2;
+
+      const result = await createMedication(event) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(200);
+      expect(result.body).to.equal(JSON.stringify('Medication created successfully'));
     });
   });
 

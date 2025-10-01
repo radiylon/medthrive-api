@@ -1,6 +1,5 @@
-import { Schedule } from "../types.ts";
-import { Medication } from "../types.ts";
-import { db } from '../drizzle.ts'
+import { Schedule, Medication } from "../types.ts";
+import { db } from '../drizzle.ts';
 import { schedule as scheduleSchema } from "../db/schema/schedule.sql.ts";
 import { eq, asc } from "drizzle-orm";
 
@@ -12,7 +11,7 @@ export default class ScheduleService {
       .orderBy(
         asc(scheduleSchema.scheduled_date),
         asc(scheduleSchema.taken_at)
-      ).execute();
+      );
     return schedules;
   }
 
@@ -21,6 +20,9 @@ export default class ScheduleService {
     const { frequency, type, start_date } = schedule;
 
     const startDate = new Date(start_date);
+    
+    // Build array of all schedules to insert
+    const schedulesToInsert = [];
     
     // Track how many pills we've scheduled
     let totalPillsScheduled = 0;
@@ -42,13 +44,13 @@ export default class ScheduleService {
       // ex. if frequency is 2, create 2 schedules for the same date
       for (let pillsForThisDate = 0; pillsForThisDate < frequency && totalPillsScheduled < quantity; pillsForThisDate++) {
         
-        // Create a schedule record for this pill
-        await db.insert(scheduleSchema).values({
+        // Add schedule to batch insert array
+        schedulesToInsert.push({
           medication_id: medicationId,
           patient_id: patientId,
           scheduled_date: currentScheduleDate,
           taken_at: null
-        }).execute();
+        });
 
         // Increment our pill counter
         totalPillsScheduled++;
@@ -62,6 +64,9 @@ export default class ScheduleService {
       }
     }
     
+    // Batch insert all schedules at once
+    await db.insert(scheduleSchema).values(schedulesToInsert);
+    
     return 'Schedules created successfully';
   }
 
@@ -69,7 +74,7 @@ export default class ScheduleService {
     const schedule = await db.update(scheduleSchema).set({ 
       taken_at: new Date(),
       updated_at: new Date()
-    }).where(eq(scheduleSchema.id, scheduleId)).execute();
+    }).where(eq(scheduleSchema.id, scheduleId));
 
     if (!schedule) {
       throw new Error('Error: Schedule not found');

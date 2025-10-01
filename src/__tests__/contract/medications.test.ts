@@ -89,6 +89,19 @@ describe('Medications', () => {
       expect(result.statusCode).to.equal(400);
       expect(result.body).to.equal('Error: medication_id is required');
     });
+
+    it('should return an error if no medication is found', async () => {
+      const event = {
+        pathParameters: {
+          medication_id: 'nonexistent-medication-id'
+        }
+      } as unknown as APIGatewayProxyEventV2;
+
+      const result = await getMedicationById(event) as APIGatewayProxyStructuredResultV2;
+
+      expect(result.statusCode).to.equal(500);
+      expect(result.body).to.equal('Error: Medication not found');
+    });
   });
 
   describe('POST /medications', () => {

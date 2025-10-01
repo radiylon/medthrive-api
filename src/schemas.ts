@@ -15,12 +15,9 @@ export const getMedicationByIdSchema = z.object({
 
 export const getMedicationsByPatientIdSchema = z.object({
   patient_id: z.string({
-    required_error: "Error: patient_id is required"
-  }).min(1, "Error: patient_id is required").nullable().refine(val => val !== null, {
-    message: "Error: patient_id is required"
-  })
-}, {
-  invalid_type_error: "Error: patient_id is required"
+    required_error: "Error: patient_id is required",
+    invalid_type_error: "Error: patient_id is required"
+  }).min(1, "Error: patient_id is required")
 });
 
 export const getPatientByIdSchema = z.object({

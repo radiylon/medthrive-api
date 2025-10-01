@@ -16,7 +16,12 @@ export default class MockMedicationService {
 
   async getMedicationById(medicationId: string): Promise<Medication> {
     const medication = mockMedications.find((medication) => medication.id === medicationId);
-    return medication!;
+    
+    if (!medication) {
+      throw new Error('Error: Medication not found');
+    }
+    
+    return medication;
   }
 
   async createMedication(medication: CreateMedicationInput): Promise<Medication> {

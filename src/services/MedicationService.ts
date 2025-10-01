@@ -12,6 +12,11 @@ export default class MedicationService {
 
   async getMedicationById(medicationId: string): Promise<Medication> {
     const medication = await db.select().from(medicationSchema).where(eq(medicationSchema.id, medicationId));
+
+    if (!medication || medication.length === 0) {
+      throw new Error('Error: Medication not found');
+    }
+
     return medication[0];
   }
 

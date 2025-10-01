@@ -1,6 +1,5 @@
-import { Schedule } from "../types.ts";
-import { Medication } from "../types.ts";
-import { db } from '../drizzle.ts'
+import { Schedule, Medication } from "../types.ts";
+import { db } from '../drizzle.ts';
 import { schedule as scheduleSchema } from "../db/schema/schedule.sql.ts";
 import { eq, asc } from "drizzle-orm";
 

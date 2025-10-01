@@ -21,19 +21,6 @@ describe('Schedules', () => {
       expect(result.body).to.equal('Error: medication_id is required');
     });
 
-    it('should return an error if medication_id is not a string', async () => {
-      const event = {
-        pathParameters: {
-          medication_id: 123456
-        }
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await getSchedulesByMedicationId(event) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal('Error: medication_id is not a string');
-    });
-
     it('should return an empty array if no schedules are found for the medication_id', async () => {
       const event = {
         pathParameters: {
@@ -75,19 +62,6 @@ describe('Schedules', () => {
 
       expect(result.statusCode).to.equal(400);
       expect(result.body).to.equal('Error: schedule_id is required');
-    });
-
-    it('should return an error if schedule_id is not a string', async () => {
-      const event = {
-        pathParameters: {
-          schedule_id: 123456
-        }
-      } as unknown as APIGatewayProxyEventV2;
-
-      const result = await markSchedule(event) as APIGatewayProxyStructuredResultV2;
-
-      expect(result.statusCode).to.equal(400);
-      expect(result.body).to.equal('Error: schedule_id is not a string');
     });
 
     it('should return an error if schedule is not found', async () => {

@@ -1,18 +1,22 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import ScheduleService from '../../services/ScheduleService.ts';
+import { getSchedulesByMedicationIdSchema } from '../../schemas.ts';
+import { getValidationErrorMessage } from '../../utils.ts';
 
 export default async function getSchedulesByMedicationId(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   try {
-    const medicationId = event.pathParameters?.medication_id;
-  
-    if (!medicationId) {
+    const validationResult = getSchedulesByMedicationIdSchema.safeParse(event.pathParameters);
+    
+    if (!validationResult.success) {
       return {
         statusCode: 400,
-        body: "Error: schedule_id is required"
+        body: getValidationErrorMessage(validationResult)
       };
     }
+
+    const { medication_id: medicationId } = validationResult.data;
 
     const scheduleService = new ScheduleService();
     const schedules = await scheduleService.getSchedulesByMedicationId(medicationId);

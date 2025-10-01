@@ -1,4 +1,5 @@
 import { Medication } from "../../../types.ts";
+import { CreateMedicationInput, PatchMedicationInput } from "../../../schemas.ts";
 import { medications as mockMedications } from "../../data/medications.ts"
 import { v4 as uuidv4 } from 'uuid';
 
@@ -18,15 +19,15 @@ export default class MockMedicationService {
     return medication!;
   }
 
-  async createMedication(medication: Medication): Promise<Medication> {
+  async createMedication(medication: CreateMedicationInput): Promise<Medication> {
     const newMedication: Medication = {
       id: uuidv4(),
-      patient_id: medication.patient_id!,
-      name: medication.name!,
+      patient_id: medication.patient_id,
+      name: medication.name,
       description: medication.description || "",
-      quantity: medication.quantity!,
-      is_active: medication.is_active ?? true,
-      schedule: medication.schedule!,
+      quantity: medication.quantity,
+      is_active: medication.is_active,
+      schedule: medication.schedule,
       created_at: new Date(),
       updated_at: new Date()
     };
@@ -36,7 +37,7 @@ export default class MockMedicationService {
     return newMedication;
   }
 
-  async updateMedication(medication: Medication): Promise<string> {
+  async updateMedication(medication: PatchMedicationInput): Promise<string> {
     // Remove the old medication
     const index = mockMedications.findIndex((m) => m.id === medication.id);
     if (index === -1) {

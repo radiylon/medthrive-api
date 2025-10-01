@@ -1,4 +1,5 @@
 import { Patient } from "../../../types.ts";
+import { CreatePatientInput } from "../../../schemas.ts";
 import { v4 as uuidv4 } from 'uuid';
 import { patients as mockPatients } from '../../data/patients.ts';
 
@@ -22,10 +23,13 @@ export default class MockPatientService {
     return patient;
   }
 
-  async createPatient(patient: Patient): Promise<string> {
-    const newPatient = {
+  async createPatient(patient: CreatePatientInput): Promise<string> {
+    const newPatient: Patient = {
       ...patient,
-      id: uuidv4()
+      gender: patient.gender || "",
+      id: uuidv4(),
+      created_at: new Date(),
+      updated_at: new Date()
     };
 
     mockPatients.push(newPatient);

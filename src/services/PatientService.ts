@@ -1,18 +1,16 @@
 import { Patient } from "../types.ts";
+import { CreatePatientInput } from "../schemas.ts";
 import { db } from '../drizzle.ts';
 import { patient as patientSchema } from '../db/schema/patient.sql.ts';
 import { eq } from "drizzle-orm";
 
 export default class PatientService {
   async getPatients(): Promise<{ id: string, first_name: string, last_name: string }[]> {
-    console.log("Getting patients from database");
     const patients = await db.select({
       id: patientSchema.id,
       first_name: patientSchema.first_name,
       last_name: patientSchema.last_name,
     }).from(patientSchema).execute();
-
-    console.log("DB query completed");
 
     return patients;
   }
@@ -27,7 +25,7 @@ export default class PatientService {
     return patient[0];
   }
 
-  async createPatient(patient: Patient): Promise<string> {
+  async createPatient(patient: CreatePatientInput): Promise<string> {
     await db.insert(patientSchema).values(patient).execute();
     
     return 'Patient created successfully';

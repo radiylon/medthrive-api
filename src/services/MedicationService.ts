@@ -1,4 +1,5 @@
 import { Medication } from "../types.ts";
+import { CreateMedicationInput, PatchMedicationInput } from "../schemas.ts";
 import { db } from "../drizzle.ts";
 import { medication as medicationSchema } from "../db/schema/medication.sql.ts";
 import { eq } from "drizzle-orm";
@@ -14,14 +15,14 @@ export default class MedicationService {
     return medication[0];
   }
 
-  async createMedication(medication: Medication): Promise<Medication> {
-    const newMedication: Omit<Medication, 'id' | 'created_at' | 'updated_at'> = {
-      patient_id: medication.patient_id!,
-      name: medication.name!,
+  async createMedication(medication: CreateMedicationInput): Promise<Medication> {
+    const newMedication = {
+      patient_id: medication.patient_id,
+      name: medication.name,
       description: medication.description || "",
-      quantity: medication.quantity!,
-      is_active: medication.is_active ?? true,
-      schedule: medication.schedule!,
+      quantity: medication.quantity,
+      is_active: medication.is_active,
+      schedule: medication.schedule,
     };
 
     const [result] = await db.insert(medicationSchema)
@@ -32,8 +33,8 @@ export default class MedicationService {
     return result;
   }
 
-  async updateMedication(medicationData: Partial<Medication>): Promise<string> {
-    await db.update(medicationSchema).set(medicationData).where(eq(medicationSchema.id, medicationData.id!)).execute();
+  async updateMedication(medicationData: PatchMedicationInput): Promise<string> {
+    await db.update(medicationSchema).set(medicationData).where(eq(medicationSchema.id, medicationData.id)).execute();
 
     return 'Medication updated successfully';
   }

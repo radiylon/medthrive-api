@@ -1,25 +1,22 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import MedicationService from '../../services/MedicationService.ts';
+import { getMedicationsByPatientIdSchema } from '../../schemas.ts';
+import { getValidationErrorMessage } from '../../utils.ts';
 
 export default async function getMedicationsByPatientId(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   try {
-    const patientId = event.pathParameters?.patient_id;
+    const validationResult = getMedicationsByPatientIdSchema.safeParse(event.pathParameters);
     
-    if (!patientId) {
+    if (!validationResult.success) {
       return {
         statusCode: 400,
-        body: "Error: patient_id is required"
+        body: getValidationErrorMessage(validationResult)
       };
     }
   
-    if (typeof patientId !== 'string') {
-      return {
-        statusCode: 400,
-        body: "Error: patient_id is not a string"
-      };
-    }
+    const { patient_id: patientId } = validationResult.data;
   
     const medicationService = new MedicationService();
     const medications = await medicationService.getMedicationsByPatientId(patientId);

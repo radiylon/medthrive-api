@@ -25,7 +25,7 @@ export default $config({
     }
   },
   async run() {
-    const vpc = new sst.aws.Vpc("MedVpc", { bastion: true, nat: "ec2" });
+    const vpc = new sst.aws.Vpc("MedVpc", { bastion: false });
     const rds = new sst.aws.Postgres("MedDatabase", { 
       vpc,
       version: "16.8",

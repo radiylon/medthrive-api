@@ -6,7 +6,7 @@ import getMedicationById from '../mocks/lambdas/get-medication-by-id.ts';
 import createMedication from '../mocks/lambdas/create-medication.ts';
 import patchMedication from '../mocks/lambdas/patch-medication.ts';
 
-// To run this test:  npm run test:contract -- --grep "Medications"
+// To run this test:  pnpm run test:contract -- --grep "Medications"
 
 describe('Medications', () => {
   describe('GET /patients/{patient_id}/medications', () => {

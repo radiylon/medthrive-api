@@ -5,7 +5,7 @@ import createPatient from '../mocks/lambdas/create-patient.ts';
 import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
 import { patients } from '../data/patients.ts';
 
-// To run this test:  npm run test:contract -- --grep "Patients"
+// To run this test:  pnpm run test:contract -- --grep "Patients"
 
 describe('Patients', () => {
   describe('GET /patients', () => {

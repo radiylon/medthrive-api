@@ -4,7 +4,7 @@ import { schedules } from '../data/schedules.ts';
 import getSchedulesByMedicationId from '../mocks/lambdas/get-schedules-by-medication-id.ts';
 import markSchedule from '../mocks/lambdas/mark-schedule.ts';
 
-// To run this test:  npm run test:contract -- --grep "Schedules"
+// To run this test:  pnpm run test:contract -- --grep "Schedules"
 
 describe('Schedules', () => {
   describe('GET /medications/{medication_id}/schedules', () => {

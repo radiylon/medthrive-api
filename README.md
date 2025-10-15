@@ -22,7 +22,7 @@ Built using TypeScript, AWS API Gateway, AWS Lambda, and Amazon RDS via SST.
 
 ## Installation
 
-After cloning down the repo, please run `npm install` to install all necessary dependencies.
+After cloning down the repo, please run `pnpm install` to install all necessary dependencies.
 
 This project utilizes AWS via sst.dev. In order to properly run the application, you will need to:
 
@@ -32,8 +32,8 @@ This project utilizes AWS via sst.dev. In order to properly run the application,
 4. Replace the profiles in `sst.config.ts` with your own account profiles
 5. Create a `.env` file at the root and set `MEDTHRIVE_UI_URL`
   - You will need to have `medthrive-ui` running locally
-6. Run `npm run dev` to start local development
-7. In a separate terminal window, navigate to the project and run `npm run db:push` to initialize tables locally
+6. Run `pnpm run dev` to start local development
+7. In a separate terminal window, navigate to the project and run `pnpm run db:push` to initialize tables locally
 
 ## Testing
 
@@ -47,29 +47,29 @@ The project uses Mocha and Chai for testing. Tests are organized into:
 ### Test Commands
 ```bash
 # Run all tests
-npm test
+pnpm test
 
 # Run only contract tests
-npm run test:contract
+pnpm run test:contract
 
 # Run specific test file or pattern
-npm run test:contract -- --grep "Medications"
+pnpm run test:contract -- --grep "Medications"
 ```
 
 ## Available Scripts
 
 ```bash
 # Start local development via SST
-npm run dev
+pnpm run dev
 
 # Push database schema changes
-npm run db:push
+pnpm run db:push
 
 # Reset local database (drops all tables and recreates schema)
-npm run db:reset
+pnpm run db:reset
 
 # Seed local database with initial data
-npm run db:seed
+pnpm run db:seed
 ```
 
 > ⚠️ Note: `db:reset` and `db:seed` are intended for local development only. Use with caution as they will modify your database data.

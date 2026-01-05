@@ -4,8 +4,8 @@ export default $config({
   app(input) {
     return {
       name: "medthrive-api",
-      removal: input?.stage === "production" ? "retain" : "remove",
-      protect: ["production"].includes(input?.stage),
+      removal: "remove",
+      protect: false,
       home: "aws",
       providers: {
         aws: {
@@ -14,15 +14,6 @@ export default $config({
         },
       },
     };
-  },
-  console: {
-    autodeploy: {
-      target(event) {
-        if (event.type === "branch" && event.branch === "main" && event.action === "pushed") {
-          return { stage: "production" };
-        }
-      }
-    }
   },
   async run() {
     const vpc = new sst.aws.Vpc("MedVpc", { bastion: false });

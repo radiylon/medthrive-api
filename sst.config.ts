@@ -3,7 +3,7 @@
 export default $config({
   app(input) {
     return {
-      name: "medthrive-api",
+      name: "medthrive-aws-api",
       removal: "remove",
       protect: false,
       home: "aws",

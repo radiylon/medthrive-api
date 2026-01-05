@@ -1,4 +1,4 @@
-# medthrive-api
+# medthrive-aws-api
 
 **medthrive** is an example medication management app for caregivers.  I built this to learn more about IaC using a framework like SST.  This is the API powering the MVP.  For the UI repo, please see [medthrive-ui](https://github.com/radiylon/medthrive-ui).
 
